@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeData.ETL.WorkerService", "src\PokeData.ETL.WorkerService\PokeData.ETL.WorkerService.csproj", "{0A74BB98-9350-4F4D-9C49-6416EE4C22C8}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{52FCD584-14A6-4EAB-8897-29EF09849BA9}"
 	ProjectSection(SolutionItems) = preProject
 		.dockerignore = .dockerignore
@@ -16,16 +14,60 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeData.Domain", "src\PokeData.Domain\PokeData.Domain.csproj", "{186F9E97-CE6D-4E6E-BD4A-FD608D66F684}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeData.Application", "src\PokeData.Application\PokeData.Application.csproj", "{74F7F535-79FF-483D-8B38-8BB48F69521F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeData.Infrastructure", "src\PokeData.Infrastructure\PokeData.Infrastructure.csproj", "{0E1AEBAB-ECDE-4029-828C-C0C42603B261}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeData.Infrastructure.PokeApi", "src\PokeData.Infrastructure.PokeApi\PokeData.Infrastructure.PokeApi.csproj", "{2996D8BE-936F-40E1-8E68-76B8D9439586}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeData.EntityFrameworkCore.Relational", "src\PokeData.EntityFrameworkCore.Relational\PokeData.EntityFrameworkCore.Relational.csproj", "{DF205C34-B0CB-4120-B184-CCF88654489C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeData.EntityFrameworkCore.SqlServer", "src\PokeData.EntityFrameworkCore.SqlServer\PokeData.EntityFrameworkCore.SqlServer.csproj", "{9F5C2DD4-3751-4D62-87DD-0E451C6E5145}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeData.EntityFrameworkCore.PostgreSQL", "src\PokeData.EntityFrameworkCore.PostgreSQL\PokeData.EntityFrameworkCore.PostgreSQL.csproj", "{D5556F02-F876-40FF-9D88-BC1B2812D715}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeData", "src\PokeData\PokeData.csproj", "{C90A7D50-2763-4345-9CFD-5EF3F05B6388}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0A74BB98-9350-4F4D-9C49-6416EE4C22C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0A74BB98-9350-4F4D-9C49-6416EE4C22C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0A74BB98-9350-4F4D-9C49-6416EE4C22C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0A74BB98-9350-4F4D-9C49-6416EE4C22C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{186F9E97-CE6D-4E6E-BD4A-FD608D66F684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{186F9E97-CE6D-4E6E-BD4A-FD608D66F684}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{186F9E97-CE6D-4E6E-BD4A-FD608D66F684}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{186F9E97-CE6D-4E6E-BD4A-FD608D66F684}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74F7F535-79FF-483D-8B38-8BB48F69521F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74F7F535-79FF-483D-8B38-8BB48F69521F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74F7F535-79FF-483D-8B38-8BB48F69521F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74F7F535-79FF-483D-8B38-8BB48F69521F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E1AEBAB-ECDE-4029-828C-C0C42603B261}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E1AEBAB-ECDE-4029-828C-C0C42603B261}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E1AEBAB-ECDE-4029-828C-C0C42603B261}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E1AEBAB-ECDE-4029-828C-C0C42603B261}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2996D8BE-936F-40E1-8E68-76B8D9439586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2996D8BE-936F-40E1-8E68-76B8D9439586}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2996D8BE-936F-40E1-8E68-76B8D9439586}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2996D8BE-936F-40E1-8E68-76B8D9439586}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF205C34-B0CB-4120-B184-CCF88654489C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF205C34-B0CB-4120-B184-CCF88654489C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF205C34-B0CB-4120-B184-CCF88654489C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF205C34-B0CB-4120-B184-CCF88654489C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F5C2DD4-3751-4D62-87DD-0E451C6E5145}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F5C2DD4-3751-4D62-87DD-0E451C6E5145}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F5C2DD4-3751-4D62-87DD-0E451C6E5145}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F5C2DD4-3751-4D62-87DD-0E451C6E5145}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5556F02-F876-40FF-9D88-BC1B2812D715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5556F02-F876-40FF-9D88-BC1B2812D715}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5556F02-F876-40FF-9D88-BC1B2812D715}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5556F02-F876-40FF-9D88-BC1B2812D715}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C90A7D50-2763-4345-9CFD-5EF3F05B6388}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C90A7D50-2763-4345-9CFD-5EF3F05B6388}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C90A7D50-2763-4345-9CFD-5EF3F05B6388}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C90A7D50-2763-4345-9CFD-5EF3F05B6388}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
