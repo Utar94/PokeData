@@ -9,12 +9,15 @@ internal class ResourceExtractor : IResourceExtractor
   private readonly ICacheService _cache;
   private readonly HttpClient _client;
   private readonly IResourceQuerier _querier;
+  private readonly Random _random = new();
+  private readonly ResourceExtractorSettings _settings;
 
-  public ResourceExtractor(ICacheService cache, HttpClient client, IResourceQuerier querier)
+  public ResourceExtractor(ICacheService cache, HttpClient client, IResourceQuerier querier, ResourceExtractorSettings settings)
   {
     _cache = cache;
     _client = client;
     _querier = querier;
+    _settings = settings;
   }
 
   public async Task<IEnumerable<Resource>> GetSpeciesAsync(string id, CancellationToken cancellationToken)
@@ -82,6 +85,8 @@ internal class ResourceExtractor : IResourceExtractor
       }
     }
 
+    await DelayAsync(cancellationToken);
+
     Uri requestUri = new(uriString);
     using HttpRequestMessage request = new(HttpMethod.Get, requestUri);
     using HttpResponseMessage response = await _client.SendAsync(request, cancellationToken);
@@ -106,6 +111,15 @@ internal class ResourceExtractor : IResourceExtractor
     {
       HttpResponseDetail detail = await response.DetailAsync(cancellationToken);
       throw new ResourceDeserializationException(detail, innerException);
+    }
+  }
+
+  private async Task DelayAsync(CancellationToken cancellationToken)
+  {
+    if (_settings.Delay != null && _settings.Delay.Minimum >= 0 && _settings.Delay.Maximum > _settings.Delay.Minimum)
+    {
+      int millisecondsDelay = _random.Next(_settings.Delay.Minimum, _settings.Delay.Maximum + 1);
+      await Task.Delay(millisecondsDelay, cancellationToken);
     }
   }
 }

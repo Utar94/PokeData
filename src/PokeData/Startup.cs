@@ -28,7 +28,7 @@ internal class Startup : StartupBase
       services.AddSwaggerGen();
     }
 
-    services.AddPokeDataInfrastructurePokeApi();
+    services.AddPokeDataInfrastructurePokeApi(_configuration);
     services.AddSingleton<IApplicationContext, HttpApplicationContext>();
 
     DatabaseProvider databaseProvider = _configuration.GetValue<DatabaseProvider?>("DatabaseProvider")
