@@ -14,21 +14,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeData.Domain", "src\PokeData.Domain\PokeData.Domain.csproj", "{186F9E97-CE6D-4E6E-BD4A-FD608D66F684}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeData.Domain", "src\PokeData.Domain\PokeData.Domain.csproj", "{186F9E97-CE6D-4E6E-BD4A-FD608D66F684}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeData.Application", "src\PokeData.Application\PokeData.Application.csproj", "{74F7F535-79FF-483D-8B38-8BB48F69521F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeData.Application", "src\PokeData.Application\PokeData.Application.csproj", "{74F7F535-79FF-483D-8B38-8BB48F69521F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeData.Infrastructure", "src\PokeData.Infrastructure\PokeData.Infrastructure.csproj", "{0E1AEBAB-ECDE-4029-828C-C0C42603B261}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeData.Infrastructure", "src\PokeData.Infrastructure\PokeData.Infrastructure.csproj", "{0E1AEBAB-ECDE-4029-828C-C0C42603B261}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeData.Infrastructure.PokeApi", "src\PokeData.Infrastructure.PokeApi\PokeData.Infrastructure.PokeApi.csproj", "{2996D8BE-936F-40E1-8E68-76B8D9439586}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeData.Infrastructure.PokeApi", "src\PokeData.Infrastructure.PokeApi\PokeData.Infrastructure.PokeApi.csproj", "{2996D8BE-936F-40E1-8E68-76B8D9439586}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeData.EntityFrameworkCore.Relational", "src\PokeData.EntityFrameworkCore.Relational\PokeData.EntityFrameworkCore.Relational.csproj", "{DF205C34-B0CB-4120-B184-CCF88654489C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeData.EntityFrameworkCore.Relational", "src\PokeData.EntityFrameworkCore.Relational\PokeData.EntityFrameworkCore.Relational.csproj", "{DF205C34-B0CB-4120-B184-CCF88654489C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeData.EntityFrameworkCore.SqlServer", "src\PokeData.EntityFrameworkCore.SqlServer\PokeData.EntityFrameworkCore.SqlServer.csproj", "{9F5C2DD4-3751-4D62-87DD-0E451C6E5145}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeData.EntityFrameworkCore.SqlServer", "src\PokeData.EntityFrameworkCore.SqlServer\PokeData.EntityFrameworkCore.SqlServer.csproj", "{9F5C2DD4-3751-4D62-87DD-0E451C6E5145}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeData.EntityFrameworkCore.PostgreSQL", "src\PokeData.EntityFrameworkCore.PostgreSQL\PokeData.EntityFrameworkCore.PostgreSQL.csproj", "{D5556F02-F876-40FF-9D88-BC1B2812D715}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeData.EntityFrameworkCore.PostgreSQL", "src\PokeData.EntityFrameworkCore.PostgreSQL\PokeData.EntityFrameworkCore.PostgreSQL.csproj", "{D5556F02-F876-40FF-9D88-BC1B2812D715}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeData", "src\PokeData\PokeData.csproj", "{C90A7D50-2763-4345-9CFD-5EF3F05B6388}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeData", "src\PokeData\PokeData.csproj", "{C90A7D50-2763-4345-9CFD-5EF3F05B6388}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

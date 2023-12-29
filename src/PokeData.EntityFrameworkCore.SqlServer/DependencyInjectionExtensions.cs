@@ -20,6 +20,7 @@ public static class DependencyInjectionExtensions
     return services
       .AddDbContext<PokemonContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("PokeData.EntityFrameworkCore.SqlServer")))
       .AddLogitarEventSourcingWithEntityFrameworkCoreSqlServer(connectionString)
-      .AddPokeDataWithEntityFrameworkCoreRelational();
+      .AddPokeDataWithEntityFrameworkCoreRelational()
+      .AddSingleton<ISqlHelper, SqlServerHelper>();
   }
 }

@@ -1,4 +1,6 @@
-﻿using Logitar.EventSourcing;
+﻿using Logitar;
+using Logitar.Data;
+using Logitar.EventSourcing;
 using Logitar.EventSourcing.EntityFrameworkCore.Relational;
 using Logitar.EventSourcing.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -9,12 +11,16 @@ namespace PokeData.EntityFrameworkCore.Relational.Repositories;
 
 internal class ResourceRepository : Logitar.EventSourcing.EntityFrameworkCore.Relational.AggregateRepository, IResourceRepository
 {
-  private readonly DbSet<ResourceEntity> _resources;
+  private static readonly string AggregateType = typeof(ResourceAggregate).GetNamespaceQualifiedName();
 
-  public ResourceRepository(IEventBus eventBus, EventContext eventContext, IEventSerializer eventSerializer, PokemonContext pokemonContext)
+  private readonly DbSet<ResourceEntity> _resources;
+  private readonly ISqlHelper _sqlHelper;
+
+  public ResourceRepository(IEventBus eventBus, EventContext eventContext, IEventSerializer eventSerializer, PokemonContext pokemonContext, ISqlHelper sqlHelper)
     : base(eventBus, eventContext, eventSerializer)
   {
     _resources = pokemonContext.Resources;
+    _sqlHelper = sqlHelper;
   }
 
   public async Task<ResourceAggregate?> LoadAsync<T>(string identifier, CancellationToken cancellationToken)
@@ -25,16 +31,20 @@ internal class ResourceRepository : Logitar.EventSourcing.EntityFrameworkCore.Re
   {
     string sourceNormalized = source.Value.Trim().ToUpper();
 
-    ResourceEntity? entity = await _resources.AsNoTracking()
-      .SingleOrDefaultAsync(x => x.SourceNormalized == sourceNormalized, cancellationToken); // TODO(fpion): optimize query using raw SQL
-    if (entity == null)
-    {
-      return null;
-    }
+    IQuery query = _sqlHelper.QueryFrom(Db.Events.Table)
+      .Join(Db.Resources.AggregateId, Db.Events.AggregateId,
+        new OperatorCondition(Db.Events.AggregateType, Operators.IsEqualTo(AggregateType))
+      )
+      .Where(Db.Resources.SourceNormalized, Operators.IsEqualTo(sourceNormalized))
+      .SelectAll(Db.Events.Table)
+      .Build();
 
-    AggregateId id = new(entity.AggregateId);
+    EventEntity[] events = await EventContext.Events.FromQuery(query)
+      .AsNoTracking()
+      .OrderBy(e => e.Version)
+      .ToArrayAsync(cancellationToken);
 
-    return await LoadAsync<ResourceAggregate>(id, cancellationToken);
+    return base.Load<ResourceAggregate>(events.Select(EventSerializer.Deserialize)).SingleOrDefault();
   }
 
   public async Task<IEnumerable<ResourceAggregate>> LoadAsync(IEnumerable<ResourceId> ids, CancellationToken cancellationToken)
