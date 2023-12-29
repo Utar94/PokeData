@@ -7,8 +7,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Added
-
-- Implemented Pokémon species import.
-- CI/CD build pipeline.
-- Implemented Region, Generation & Type synchronization.
+Nothing yet.
