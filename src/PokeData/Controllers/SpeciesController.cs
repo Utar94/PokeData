@@ -1,11 +1,12 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PokeData.Application.Resources.Commands;
 
 namespace PokeData.Controllers;
 
 [ApiController]
-//[Authorize] // TODO(fpion): Authorization
+[Authorize]
 [Route("species")]
 public class SpeciesController : ControllerBase
 {

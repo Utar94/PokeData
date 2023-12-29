@@ -1,6 +1,6 @@
 ﻿# PokeData.EntityFrameworkCore.PostgreSQL
 
-TODO
+Provides an implementation of a relational event store to be used with PokéData Pokémon data management system, Entity Framework Core and PostgreSQL.
 
 ## Migrations
 
