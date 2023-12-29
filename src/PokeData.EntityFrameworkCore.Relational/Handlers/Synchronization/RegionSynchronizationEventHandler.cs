@@ -6,7 +6,7 @@ using PokeData.EntityFrameworkCore.Relational.Entities;
 using PokeData.EntityFrameworkCore.Relational.Models;
 using System.Text.Json;
 
-namespace PokeData.EntityFrameworkCore.Relational.Handlers.Resources;
+namespace PokeData.EntityFrameworkCore.Relational.Handlers.Synchronization;
 
 internal class RegionSynchronizationEventHandler : INotificationHandler<ResourceSavedEvent>
 {
@@ -38,7 +38,7 @@ internal class RegionSynchronizationEventHandler : INotificationHandler<Resource
         }
 
         entity.UniqueName = region.UniqueName;
-        entity.DisplayName = region.Names.SingleOrDefault(name => name.Language?.Name == "en")?.Value; // TODO(fpion): configuration
+        entity.DisplayName = region.DisplayNames.SingleOrDefault(name => name.Language?.Name == "en")?.Value; // TODO(fpion): configuration
 
         await _context.SaveChangesAsync(cancellationToken);
       }

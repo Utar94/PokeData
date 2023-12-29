@@ -1,6 +1,6 @@
 ﻿namespace PokeData.EntityFrameworkCore.Relational.Models;
 
-internal class Region // TODO(fpion): code duplication
+internal class Generation // TODO(fpion): code duplication
 {
   /// <summary>
   /// The identifier for this resource.

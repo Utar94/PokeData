@@ -1,6 +1,6 @@
 ﻿using PokeData.Application;
+using PokeData.Application.Resources;
 using PokeData.EntityFrameworkCore.PostgreSQL;
-using PokeData.Infrastructure.PokeApi;
 
 namespace PokeData.Tools.Synchronization;
 
@@ -12,9 +12,9 @@ public class Program
     builder.Services.AddHostedService<Worker>();
 
     // TODO(fpion): BEGIN REFACTOR
-    builder.Services.AddPokeDataInfrastructurePokeApi(builder.Configuration);
     builder.Services.AddPokeDataWithEntityFrameworkCorePostgreSQL(builder.Configuration);
     builder.Services.AddSingleton<IApplicationContext, SynchronizationApplicationContext>();
+    builder.Services.AddSingleton<IResourceExtractor, FakeResourceExtractor>();
     // TODO(fpion): END REFACTOR
 
     IHost host = builder.Build();

@@ -17,6 +17,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\PokeData.EntityFrameworkCore.PostgreSQL\PokeData.EntityFrameworkCore.PostgreSQL.csproj" />
     <ProjectReference Include="..\..\src\PokeData.EntityFrameworkCore.SqlServer\PokeData.EntityFrameworkCore.SqlServer.csproj" />
-    <ProjectReference Include="..\..\src\PokeData.Infrastructure.PokeApi\PokeData.Infrastructure.PokeApi.csproj" />
+    <ProjectReference Include="..\..\src\PokeData.Infrastructure\PokeData.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

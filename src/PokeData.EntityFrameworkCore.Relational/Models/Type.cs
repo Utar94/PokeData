@@ -1,6 +1,6 @@
 ﻿namespace PokeData.EntityFrameworkCore.Relational.Models;
 
-internal class Region // TODO(fpion): code duplication
+internal record Type // TODO(fpion): code duplication
 {
   /// <summary>
   /// The identifier for this resource.
@@ -20,3 +20,4 @@ internal class Region // TODO(fpion): code duplication
   [JsonPropertyName("names")]
   public List<Name> DisplayNames { get; set; } = [];
 }
+

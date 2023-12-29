@@ -10,7 +10,9 @@ public class PokemonContext : DbContext
   }
 
   internal DbSet<ResourceEntity> Resources { get; private set; }
+  internal DbSet<GenerationEntity> Generations { get; private set; }
   internal DbSet<RegionEntity> Regions { get; private set; }
+  internal DbSet<TypeEntity> Types { get; private set; }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {

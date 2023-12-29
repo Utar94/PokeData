@@ -2,8 +2,10 @@
 using Logitar.EventSourcing;
 using Logitar.EventSourcing.EntityFrameworkCore.Relational;
 using Logitar.EventSourcing.Infrastructure;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using PokeData.Domain.Resources;
+using PokeData.Infrastructure.Commands;
 using System.Diagnostics;
 
 namespace PokeData.Tools.Synchronization;
@@ -24,9 +26,12 @@ public class Worker : BackgroundService
     Stopwatch chrono = Stopwatch.StartNew();
 
     using IServiceScope scope = _serviceProvider.CreateScope();
+    IPublisher publisher = scope.ServiceProvider.GetRequiredService<IPublisher>();
     using EventContext context = scope.ServiceProvider.GetRequiredService<EventContext>();
     IEventSerializer serializer = scope.ServiceProvider.GetRequiredService<IEventSerializer>();
     IEventBus bus = scope.ServiceProvider.GetRequiredService<IEventBus>();
+
+    await publisher.Publish(new InitializeDatabaseCommand(), cancellationToken);
 
     string aggregateType = typeof(ResourceAggregate).GetNamespaceQualifiedName();
     EventEntity[] events = await context.Events.AsNoTracking()
