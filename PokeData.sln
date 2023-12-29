@@ -30,6 +30,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeData.EntityFrameworkCor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeData", "src\PokeData\PokeData.csproj", "{C90A7D50-2763-4345-9CFD-5EF3F05B6388}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeData.ETL", "src\PokeData.ETL\PokeData.ETL.csproj", "{9155019E-35B2-471D-B227-F1AEA104ECE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{C90A7D50-2763-4345-9CFD-5EF3F05B6388}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C90A7D50-2763-4345-9CFD-5EF3F05B6388}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C90A7D50-2763-4345-9CFD-5EF3F05B6388}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9155019E-35B2-471D-B227-F1AEA104ECE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9155019E-35B2-471D-B227-F1AEA104ECE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9155019E-35B2-471D-B227-F1AEA104ECE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9155019E-35B2-471D-B227-F1AEA104ECE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

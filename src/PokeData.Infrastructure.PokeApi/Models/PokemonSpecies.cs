@@ -36,7 +36,7 @@ internal class PokemonSpecies
   /// The happiness when caught by a normal Pokéball; up to 255. The higher the number, the happier the Pokémon.
   /// </summary>
   [JsonPropertyName("base_happiness")]
-  public int BaseHappiness { get; set; }
+  public int? BaseHappiness { get; set; }
 
   /// <summary>
   /// Whether or not this is a baby Pokémon.
@@ -60,7 +60,7 @@ internal class PokemonSpecies
   /// Initial hatch counter: one must walk 255 × (hatch_counter + 1) steps before this Pokémon's egg hatches, unless utilizing bonuses like Flame Body's.
   /// </summary>
   [JsonPropertyName("hatch_counter")]
-  public int HatchCounter { get; set; }
+  public int? HatchCounter { get; set; }
 
   /// <summary>
   /// Whether or not this Pokémon has visual gender differences.

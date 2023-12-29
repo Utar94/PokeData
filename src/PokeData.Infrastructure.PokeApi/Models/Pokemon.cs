@@ -18,7 +18,7 @@ internal class Pokemon
   /// The base experience gained for defeating this Pokémon.
   /// </summary>
   [JsonPropertyName("base_experience")]
-  public int BaseExperience { get; set; }
+  public int? BaseExperience { get; set; }
 
   /// <summary>
   /// The height of this Pokémon in decimetres.

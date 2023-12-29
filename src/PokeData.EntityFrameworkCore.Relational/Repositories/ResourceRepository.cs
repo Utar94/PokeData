@@ -5,7 +5,6 @@ using Logitar.EventSourcing.EntityFrameworkCore.Relational;
 using Logitar.EventSourcing.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using PokeData.Domain.Resources;
-using PokeData.EntityFrameworkCore.Relational.Entities;
 
 namespace PokeData.EntityFrameworkCore.Relational.Repositories;
 
@@ -13,13 +12,11 @@ internal class ResourceRepository : Logitar.EventSourcing.EntityFrameworkCore.Re
 {
   private static readonly string AggregateType = typeof(ResourceAggregate).GetNamespaceQualifiedName();
 
-  private readonly DbSet<ResourceEntity> _resources;
   private readonly ISqlHelper _sqlHelper;
 
-  public ResourceRepository(IEventBus eventBus, EventContext eventContext, IEventSerializer eventSerializer, PokemonContext pokemonContext, ISqlHelper sqlHelper)
+  public ResourceRepository(IEventBus eventBus, EventContext eventContext, IEventSerializer eventSerializer, ISqlHelper sqlHelper)
     : base(eventBus, eventContext, eventSerializer)
   {
-    _resources = pokemonContext.Resources;
     _sqlHelper = sqlHelper;
   }
 

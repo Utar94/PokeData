@@ -17,7 +17,7 @@ internal class BasicAuthenticationHandler : AuthenticationHandler<BasicAuthentic
     _userService = userService;
   }
 
-  protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
+  protected override Task<AuthenticateResult> HandleAuthenticateAsync()
   {
     if (Context.Request.Headers.TryGetValue(Headers.Authorization, out StringValues authorization))
     {
@@ -27,7 +27,7 @@ internal class BasicAuthenticationHandler : AuthenticationHandler<BasicAuthentic
         string[] values = value.Split();
         if (values.Length != 2)
         {
-          return AuthenticateResult.Fail($"The Authorization header value is not valid: '{value}'.");
+          return Task.FromResult(AuthenticateResult.Fail($"The Authorization header value is not valid: '{value}'."));
         }
         else if (values[0] == Schemes.Basic)
         {
@@ -36,7 +36,7 @@ internal class BasicAuthenticationHandler : AuthenticationHandler<BasicAuthentic
           int index = credentials.IndexOf(':');
           if (index <= 0)
           {
-            return AuthenticateResult.Fail($"The Basic credentials are not valid: '{credentials}'.");
+            return Task.FromResult(AuthenticateResult.Fail($"The Basic credentials are not valid: '{credentials}'."));
           }
 
           try
@@ -46,7 +46,7 @@ internal class BasicAuthenticationHandler : AuthenticationHandler<BasicAuthentic
             User? user = _userService.Authenticate(username, password);
             if (user == null)
             {
-              return AuthenticateResult.Fail("The specified credentials did not match.");
+              return Task.FromResult(AuthenticateResult.Fail("The specified credentials did not match."));
             }
 
             Context.SetUser(user);
@@ -54,16 +54,16 @@ internal class BasicAuthenticationHandler : AuthenticationHandler<BasicAuthentic
             ClaimsPrincipal principal = new(user.CreateClaimsIdentity(Scheme.Name));
             AuthenticationTicket ticket = new(principal, Scheme.Name);
 
-            return AuthenticateResult.Success(ticket);
+            return Task.FromResult(AuthenticateResult.Success(ticket));
           }
           catch (Exception exception)
           {
-            return AuthenticateResult.Fail(exception);
+            return Task.FromResult(AuthenticateResult.Fail(exception));
           }
         }
       }
     }
 
-    return AuthenticateResult.NoResult();
+    return Task.FromResult(AuthenticateResult.NoResult());
   }
 }

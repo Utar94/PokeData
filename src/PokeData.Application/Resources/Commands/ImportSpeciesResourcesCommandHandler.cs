@@ -25,28 +25,20 @@ internal class ImportSpeciesResourcesCommandHandler : IRequestHandler<ImportSpec
     Dictionary<ResourceId, ResourceAggregate> aggregates = (await _resourceRepository.LoadAsync(resourceIds, cancellationToken))
       .ToDictionary(r => r.Id, r => r);
 
-    List<ResourceAggregate> savedAggregates = new(capacity: aggregates.Count);
-
     foreach (Resource resource in resources)
     {
       if (aggregates.TryGetValue(resource.Id, out ResourceAggregate? aggregate))
       {
         aggregate.Update(resource.Source, resource.Json, _applicationContext.ActorId);
-        if (aggregate.HasChanges)
-        {
-          savedAggregates.Add(aggregate);
-        }
       }
       else
       {
         aggregate = new(resource.Id, resource.Source, resource.Json, _applicationContext.ActorId);
-        savedAggregates.Add(aggregate);
-
         aggregates[aggregate.Id] = aggregate;
       }
     }
 
-    await _resourceRepository.SaveAsync(savedAggregates, cancellationToken);
+    await _resourceRepository.SaveAsync(aggregates.Values, cancellationToken);
 
     return Unit.Value;
   }
