@@ -1,6 +1,0 @@
-@PokeData_HostAddress = http://localhost:5241
-
-GET {{PokeData_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
