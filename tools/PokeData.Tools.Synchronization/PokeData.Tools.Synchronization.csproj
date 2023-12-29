@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-PokeData.Tools.Synchronization-09fd4965-45f7-427d-8628-d3ab7b441b89</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\PokeData.EntityFrameworkCore.PostgreSQL\PokeData.EntityFrameworkCore.PostgreSQL.csproj" />
+    <ProjectReference Include="..\..\src\PokeData.EntityFrameworkCore.SqlServer\PokeData.EntityFrameworkCore.SqlServer.csproj" />
+    <ProjectReference Include="..\..\src\PokeData.Infrastructure.PokeApi\PokeData.Infrastructure.PokeApi.csproj" />
+  </ItemGroup>
+</Project>
