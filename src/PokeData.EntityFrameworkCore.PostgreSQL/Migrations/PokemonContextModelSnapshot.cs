@@ -22,60 +22,6 @@ namespace PokeData.EntityFrameworkCore.PostgreSQL.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("PokeData.EntityFrameworkCore.Relational.Entities.GenerationEntity", b =>
-                {
-                    b.Property<int>("GenerationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("GenerationId"));
-
-                    b.Property<string>("DisplayName")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<string>("UniqueName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.HasKey("GenerationId");
-
-                    b.HasIndex("DisplayName");
-
-                    b.HasIndex("UniqueName")
-                        .IsUnique();
-
-                    b.ToTable("Generations", (string)null);
-                });
-
-            modelBuilder.Entity("PokeData.EntityFrameworkCore.Relational.Entities.RegionEntity", b =>
-                {
-                    b.Property<int>("RegionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RegionId"));
-
-                    b.Property<string>("DisplayName")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<string>("UniqueName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.HasKey("RegionId");
-
-                    b.HasIndex("DisplayName");
-
-                    b.HasIndex("UniqueName")
-                        .IsUnique();
-
-                    b.ToTable("Regions", (string)null);
-                });
-
             modelBuilder.Entity("PokeData.EntityFrameworkCore.Relational.Entities.ResourceEntity", b =>
                 {
                     b.Property<long>("ResourceId")
@@ -143,33 +89,6 @@ namespace PokeData.EntityFrameworkCore.PostgreSQL.Migrations
                     b.HasIndex("Version");
 
                     b.ToTable("Resources", (string)null);
-                });
-
-            modelBuilder.Entity("PokeData.EntityFrameworkCore.Relational.Entities.TypeEntity", b =>
-                {
-                    b.Property<int>("TypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TypeId"));
-
-                    b.Property<string>("DisplayName")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<string>("UniqueName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.HasKey("TypeId");
-
-                    b.HasIndex("DisplayName");
-
-                    b.HasIndex("UniqueName")
-                        .IsUnique();
-
-                    b.ToTable("Types", (string)null);
                 });
 #pragma warning restore 612, 618
         }
