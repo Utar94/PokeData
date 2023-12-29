@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <WarningsAsErrors>Nullable</WarningsAsErrors>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <UserSecretsId>82a05561-282b-494a-accd-71c8cfa2a0b2</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="secrets.example.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="secrets.example.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Logitar.Security" Version="5.2.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PokeData.EntityFrameworkCore.PostgreSQL\PokeData.EntityFrameworkCore.PostgreSQL.csproj" />
+    <ProjectReference Include="..\PokeData.EntityFrameworkCore.SqlServer\PokeData.EntityFrameworkCore.SqlServer.csproj" />
+    <ProjectReference Include="..\PokeData.Infrastructure.PokeApi\PokeData.Infrastructure.PokeApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="System.Security.Claims" />
+    <Using Include="System.Security.Cryptography" />
+    <Using Include="System.Text" />
+    <Using Include="System.Text.Encodings.Web" />
+    <Using Include="System.Text.Json.Serialization" />
+  </ItemGroup>
+
+</Project>
