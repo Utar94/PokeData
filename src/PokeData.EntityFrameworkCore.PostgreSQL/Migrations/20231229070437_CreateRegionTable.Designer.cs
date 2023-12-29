@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PokeData.EntityFrameworkCore.Relational;
@@ -11,9 +12,11 @@ using PokeData.EntityFrameworkCore.Relational;
 namespace PokeData.EntityFrameworkCore.PostgreSQL.Migrations
 {
     [DbContext(typeof(PokemonContext))]
-    partial class PokemonContextModelSnapshot : ModelSnapshot
+    [Migration("20231229070437_CreateRegionTable")]
+    partial class CreateRegionTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,33 +24,6 @@ namespace PokeData.EntityFrameworkCore.PostgreSQL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("PokeData.EntityFrameworkCore.Relational.Entities.GenerationEntity", b =>
-                {
-                    b.Property<int>("GenerationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("GenerationId"));
-
-                    b.Property<string>("DisplayName")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<string>("UniqueName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.HasKey("GenerationId");
-
-                    b.HasIndex("DisplayName");
-
-                    b.HasIndex("UniqueName")
-                        .IsUnique();
-
-                    b.ToTable("Generations", (string)null);
-                });
 
             modelBuilder.Entity("PokeData.EntityFrameworkCore.Relational.Entities.RegionEntity", b =>
                 {
@@ -143,33 +119,6 @@ namespace PokeData.EntityFrameworkCore.PostgreSQL.Migrations
                     b.HasIndex("Version");
 
                     b.ToTable("Resources", (string)null);
-                });
-
-            modelBuilder.Entity("PokeData.EntityFrameworkCore.Relational.Entities.TypeEntity", b =>
-                {
-                    b.Property<int>("TypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TypeId"));
-
-                    b.Property<string>("DisplayName")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<string>("UniqueName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.HasKey("TypeId");
-
-                    b.HasIndex("DisplayName");
-
-                    b.HasIndex("UniqueName")
-                        .IsUnique();
-
-                    b.ToTable("Types", (string)null);
                 });
 #pragma warning restore 612, 618
         }
