@@ -1,4 +1,4 @@
-name: Build Pok√©Data Solution
+name: Build PokÈData Solution
 
 on:
   push:
@@ -8,11 +8,11 @@ on:
 
 jobs:
   build:
-    name: Build Pok√©Data Solution
+    name: Build PokÈData Solution
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Build Docker Image
-        run: docker build . -t francispion.azurecr.io/pokedata:${{ github.sha }} -f src/PokeData.ETL/Dockerfile
+        run: docker build . -t francispion.azurecr.io/pokedata:${{ github.sha }} -f src/PokeData/Dockerfile
