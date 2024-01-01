@@ -1,4 +1,4 @@
-# Pok�Data
+# PokéData
 
 Pokémon data management.
 
