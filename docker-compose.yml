@@ -8,10 +8,10 @@ services:
     environment:
       ACCEPT_EULA: 'Y'
       MSSQL_SA_PASSWORD: m7tPnE6dB5TQxYCW
-  
+
   pokedata_api:
     build:
-      context: .
+      context: ./backend
       dockerfile: /src/PokeData/Dockerfile
     image: pokedata_api
     container_name: PokeData_api
