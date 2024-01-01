@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using Logitar.EventSourcing;
+using Microsoft.Extensions.Caching.Memory;
 using PokeData.Application.Caching;
+using PokeData.Contracts.Actors;
 using PokeData.Domain.Resources;
 using PokeData.Infrastructure.Settings;
 
@@ -15,6 +17,15 @@ internal class CacheService : ICacheService
     _cache = cache;
     _settings = settings;
   }
+
+  public Actor? GetActor(ActorId id) => GetItem<Actor>(GetActorKey(id));
+  public void SetActor(Actor actor)
+  {
+    TimeSpan? expiration = _settings.ActorLifetimeSeconds > 0 ? TimeSpan.FromSeconds(_settings.ActorLifetimeSeconds) : null;
+    ActorId id = new(actor.Id);
+    SetItem(GetActorKey(id), actor, expiration);
+  }
+  private static string GetActorKey(ActorId id) => $"Actor.Id:{id}";
 
   public Resource? GetResource(Uri source) => GetItem<Resource>(GetResourceKey(source));
   public void SetResource(Resource resource)

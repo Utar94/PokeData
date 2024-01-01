@@ -33,6 +33,7 @@ internal class PokemonSpeciesEntity : AggregateEntity
 
   public byte BaseFriendship { get; private set; }
 
+  public PokemonRosterEntity? Roster { get; private set; }
   public List<PokemonVarietyEntity> Varieties { get; private set; } = [];
 
   public PokemonSpeciesEntity(PokemonSpecies species, GenerationEntity generation)

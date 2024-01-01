@@ -2,7 +2,7 @@
 
 namespace PokeData.Domain.Regions;
 
-public class Region
+public class RegionAggregate
 {
   public byte Number { get; set; }
 

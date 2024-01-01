@@ -18,7 +18,9 @@ internal class RegionEntity : AggregateEntity
   public GenerationEntity? MainGeneration { get; private set; }
   public int? MainGenerationId { get; private set; }
 
-  public RegionEntity(Region generation)
+  public List<PokemonRosterEntity> Roster { get; private set; } = [];
+
+  public RegionEntity(RegionAggregate generation)
   {
     AggregateId = Logitar.EventSourcing.AggregateId.NewId().ToString();
     Version = 1;
@@ -35,7 +37,7 @@ internal class RegionEntity : AggregateEntity
   {
   }
 
-  public void Update(Region generation)
+  public void Update(RegionAggregate generation)
   {
     if (generation.UniqueName != UniqueName || generation.DisplayName != DisplayName)
     {

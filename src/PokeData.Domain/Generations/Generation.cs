@@ -9,5 +9,5 @@ public class Generation
   public string UniqueName { get; set; } = string.Empty;
   public string? DisplayName { get; set; }
 
-  public Region? MainRegion { get; set; }
+  public RegionAggregate? MainRegion { get; set; }
 }
