@@ -12,3 +12,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Implemented species extraction to JSON and CSV.
 - Implemented a Web API.
 - Implemented roster management.
+- Implemented roster statistics.

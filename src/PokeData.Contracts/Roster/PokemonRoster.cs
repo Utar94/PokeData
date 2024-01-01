@@ -3,5 +3,5 @@
 public record PokemonRoster
 {
   public List<RosterItem> Items { get; set; } = [];
-  // TODO(fpion): Stats
+  public RosterStatistics Stats { get; set; } = new();
 }
