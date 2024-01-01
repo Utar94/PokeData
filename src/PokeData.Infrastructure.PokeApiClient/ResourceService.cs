@@ -53,7 +53,7 @@ internal class ResourceService : IResourceService
           RegionModel? regionModel = await ExtractAsync<RegionModel>(generationModel.MainRegion, cancellationToken);
           if (regionModel != null)
           {
-            Region region = new()
+            RegionAggregate region = new()
             {
               Number = (byte)regionModel.Id,
               UniqueName = regionModel.Name,

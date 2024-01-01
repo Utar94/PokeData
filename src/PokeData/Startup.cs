@@ -1,5 +1,6 @@
 ﻿using PokeData.EntityFrameworkCore.SqlServer;
 using PokeData.Infrastructure.PokeApiClient;
+using System.Text.Json.Serialization;
 
 namespace PokeData;
 
@@ -18,7 +19,8 @@ internal class Startup : StartupBase
   {
     base.ConfigureServices(services);
 
-    services.AddControllers();
+    services.AddControllers()
+      .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
     if (_enableOpenApi)
     {

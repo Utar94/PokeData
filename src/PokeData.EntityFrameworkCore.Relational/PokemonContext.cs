@@ -9,7 +9,9 @@ public class PokemonContext : DbContext
   {
   }
 
+  internal DbSet<ActorEntity> Actors { get; private set; }
   internal DbSet<GenerationEntity> Generations { get; private set; }
+  internal DbSet<PokemonRosterEntity> PokemonRoster { get; private set; }
   internal DbSet<PokemonSpeciesEntity> PokemonSpecies { get; private set; }
   internal DbSet<PokemonTypeEntity> PokemonTypes { get; private set; }
   internal DbSet<PokemonVarietyEntity> PokemonVarieties { get; private set; }

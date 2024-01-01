@@ -15,20 +15,20 @@ internal class ResourceRepository : IResourceRepository
 
   public async Task<IEnumerable<Resource>> GetAsync(CancellationToken cancellationToken)
   {
-    ResourceEntity[] entities = await _context.Resources.AsNoTracking()
+    ResourceEntity[] resources = await _context.Resources.AsNoTracking()
       .ToArrayAsync(cancellationToken);
 
-    return entities.Select(Map);
+    return resources.Select(DomainMapper.ToResource);
   }
 
   public async Task<Resource?> GetAsync(Uri source, CancellationToken cancellationToken)
   {
     string sourceNormalized = source.ToString().ToUpper();
 
-    ResourceEntity? entity = await _context.Resources.AsNoTracking()
+    ResourceEntity? resource = await _context.Resources.AsNoTracking()
       .SingleOrDefaultAsync(x => x.SourceNormalized == sourceNormalized, cancellationToken);
 
-    return entity == null ? null : Map(entity);
+    return resource == null ? null : DomainMapper.ToResource(resource);
   }
 
   public async Task SaveAsync(Resource resource, CancellationToken cancellationToken)
@@ -48,6 +48,4 @@ internal class ResourceRepository : IResourceRepository
 
     await _context.SaveChangesAsync(cancellationToken);
   }
-
-  private static Resource Map(ResourceEntity resource) => new(new Uri(resource.Source), new Content(resource.ContentType, resource.ContentText));
 }

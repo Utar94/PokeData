@@ -22,6 +22,56 @@ namespace PokeData.EntityFrameworkCore.SqlServer.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("PokeData.EntityFrameworkCore.Relational.Entities.ActorEntity", b =>
+                {
+                    b.Property<int>("ActorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ActorId"));
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("EmailAddress")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Id")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PictureUrl")
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("ActorId");
+
+                    b.HasIndex("DisplayName");
+
+                    b.HasIndex("EmailAddress");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("Type");
+
+                    b.ToTable("Actors", (string)null);
+                });
+
             modelBuilder.Entity("PokeData.EntityFrameworkCore.Relational.Entities.GenerationEntity", b =>
                 {
                     b.Property<int>("GenerationId")
@@ -91,6 +141,101 @@ namespace PokeData.EntityFrameworkCore.SqlServer.Migrations
                     b.HasIndex("Version");
 
                     b.ToTable("Generations", (string)null);
+                });
+
+            modelBuilder.Entity("PokeData.EntityFrameworkCore.Relational.Entities.PokemonRosterEntity", b =>
+                {
+                    b.Property<int>("PokemonSpeciesId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("AggregateId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Category")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsBaby")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsLegendary")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsMythical")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PrimaryTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RegionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SecondaryTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("Version")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("PokemonSpeciesId");
+
+                    b.HasIndex("AggregateId")
+                        .IsUnique();
+
+                    b.HasIndex("Category");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("CreatedOn");
+
+                    b.HasIndex("IsBaby");
+
+                    b.HasIndex("IsLegendary");
+
+                    b.HasIndex("IsMythical");
+
+                    b.HasIndex("Name");
+
+                    b.HasIndex("Number");
+
+                    b.HasIndex("PrimaryTypeId");
+
+                    b.HasIndex("RegionId");
+
+                    b.HasIndex("SecondaryTypeId");
+
+                    b.HasIndex("UpdatedBy");
+
+                    b.HasIndex("UpdatedOn");
+
+                    b.HasIndex("Version");
+
+                    b.ToTable("PokemonRoster", (string)null);
                 });
 
             modelBuilder.Entity("PokeData.EntityFrameworkCore.Relational.Entities.PokemonSpeciesEntity", b =>
@@ -536,6 +681,39 @@ namespace PokeData.EntityFrameworkCore.SqlServer.Migrations
                     b.Navigation("MainRegion");
                 });
 
+            modelBuilder.Entity("PokeData.EntityFrameworkCore.Relational.Entities.PokemonRosterEntity", b =>
+                {
+                    b.HasOne("PokeData.EntityFrameworkCore.Relational.Entities.PokemonSpeciesEntity", "PokemonSpecies")
+                        .WithOne("Roster")
+                        .HasForeignKey("PokeData.EntityFrameworkCore.Relational.Entities.PokemonRosterEntity", "PokemonSpeciesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PokeData.EntityFrameworkCore.Relational.Entities.PokemonTypeEntity", "PrimaryType")
+                        .WithMany()
+                        .HasForeignKey("PrimaryTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PokeData.EntityFrameworkCore.Relational.Entities.RegionEntity", "Region")
+                        .WithMany("Roster")
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("PokeData.EntityFrameworkCore.Relational.Entities.PokemonTypeEntity", "SecondaryType")
+                        .WithMany()
+                        .HasForeignKey("SecondaryTypeId");
+
+                    b.Navigation("PokemonSpecies");
+
+                    b.Navigation("PrimaryType");
+
+                    b.Navigation("Region");
+
+                    b.Navigation("SecondaryType");
+                });
+
             modelBuilder.Entity("PokeData.EntityFrameworkCore.Relational.Entities.PokemonSpeciesEntity", b =>
                 {
                     b.HasOne("PokeData.EntityFrameworkCore.Relational.Entities.GenerationEntity", "Generation")
@@ -579,12 +757,16 @@ namespace PokeData.EntityFrameworkCore.SqlServer.Migrations
 
             modelBuilder.Entity("PokeData.EntityFrameworkCore.Relational.Entities.PokemonSpeciesEntity", b =>
                 {
+                    b.Navigation("Roster");
+
                     b.Navigation("Varieties");
                 });
 
             modelBuilder.Entity("PokeData.EntityFrameworkCore.Relational.Entities.RegionEntity", b =>
                 {
                     b.Navigation("MainGeneration");
+
+                    b.Navigation("Roster");
                 });
 #pragma warning restore 612, 618
         }
