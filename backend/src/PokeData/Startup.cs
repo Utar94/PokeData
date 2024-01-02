@@ -1,6 +1,9 @@
-﻿using PokeData.EntityFrameworkCore.SqlServer;
+﻿using Logitar.EventSourcing.EntityFrameworkCore.Relational;
+using PokeData.EntityFrameworkCore.Relational;
+using PokeData.EntityFrameworkCore.SqlServer;
+using PokeData.Extensions;
 using PokeData.Infrastructure.PokeApiClient;
-using System.Text.Json.Serialization;
+using PokeData.Settings;
 
 namespace PokeData;
 
@@ -20,34 +23,58 @@ internal class Startup : StartupBase
     base.ConfigureServices(services);
 
     services.AddControllers()
-      .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+      .AddJsonOptions(options =>
+      {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+      });
+
+    CorsSettings corsSettings = _configuration.GetSection("Cors").Get<CorsSettings>() ?? new();
+    services.AddSingleton(corsSettings);
+    services.AddCors(corsSettings);
+
+    services.AddApplicationInsightsTelemetry();
+    services.AddMemoryCache();
+    IHealthChecksBuilder healthChecks = services.AddHealthChecks();
 
     if (_enableOpenApi)
     {
-      services.AddEndpointsApiExplorer();
-      services.AddSwaggerGen();
+      services.AddOpenApi();
     }
 
     services.AddMemoryCache();
-    services.AddPokeDataWithEntityFrameworkCoreSqlServer(_configuration);
     services.AddPokeDataWithPokeApiClient();
+
+    DatabaseProvider databaseProvider = _configuration.GetValue<DatabaseProvider?>("DatabaseProvider")
+      ?? DatabaseProvider.EntityFrameworkCoreSqlServer;
+    switch (databaseProvider)
+    {
+      case DatabaseProvider.EntityFrameworkCoreSqlServer:
+        services.AddPokeDataWithEntityFrameworkCoreSqlServer(_configuration);
+        healthChecks.AddDbContextCheck<EventContext>();
+        healthChecks.AddDbContextCheck<PokemonContext>();
+        break;
+      default:
+        throw new DatabaseProviderNotSupportedException(databaseProvider);
+    }
   }
 
   public override void Configure(IApplicationBuilder builder)
   {
     if (_enableOpenApi)
     {
-      builder.UseSwagger();
-      builder.UseSwaggerUI();
+      builder.UseOpenApi();
     }
 
     builder.UseHttpsRedirection();
+    builder.UseCors();
     builder.UseAuthentication();
     builder.UseAuthorization();
 
     if (builder is WebApplication application)
     {
       application.MapControllers();
+      application.MapHealthChecks("/health");
     }
   }
 }
