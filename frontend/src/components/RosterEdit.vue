@@ -33,6 +33,8 @@ function onSelected(): void {
 defineEmits<{
   (e: "updated"): void;
 }>();
+
+// TODO(fpion): put inside a medium/large modal
 </script>
 
 <template>
