@@ -21,9 +21,16 @@ public class PokemonRosterController : ControllerBase
   }
 
   [HttpPut("{speciesId}")]
-  public async Task<ActionResult> SaveAsync(ushort speciesId, [FromBody] SaveRosterItemPayload payload, CancellationToken cancellationToken)
+  public async Task<ActionResult<SavedRosterItem>> SaveAsync(ushort speciesId, [FromBody] SaveRosterItemPayload payload, CancellationToken cancellationToken)
   {
     await _rosterService.SaveItemAsync(speciesId, payload, cancellationToken);
-    return NoContent();
+
+    PokemonRoster roster = await _rosterService.GetAsync(cancellationToken);
+    SavedRosterItem result = new()
+    {
+      Item = roster.Items.Single(item => item.SpeciesId == speciesId),
+      Stats = roster.Stats
+    };
+    return Ok(result);
   }
 }

@@ -19,6 +19,7 @@ defineEmits<{
       <tr>
         <th scope="col">Source</th>
         <th scope="col">Destination</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -27,10 +28,17 @@ defineEmits<{
           <RosterItem :pokemon="item.source" />
         </td>
         <td>
-          <!-- TODO(fpion): Edit / Remove existing destination Pokémon -->
           <RosterItem v-if="item.destination" :pokemon="item.destination" />
-          <div v-else class="text-end">
-            <TarButton :icon="['fas', 'plus']" text="Add" variant="success" @click="$emit('selected', item)" />
+        </td>
+        <td>
+          <div class="text-end">
+            <template v-if="item.destination">
+              <TarButton class="me-2" disabled :icon="['fas', 'pen-to-square']" text="Edit" variant="primary" @click="$emit('selected', item)" />
+              <TarButton disabled :icon="['fas', 'times']" text="Remove" variant="danger" />
+              <!-- TODO(fpion): complete Edit -->
+              <!-- TODO(fpion): complete Remove -->
+            </template>
+            <TarButton v-else :icon="['fas', 'plus']" text="Add" variant="success" @click="$emit('selected', item)" />
           </div>
         </td>
       </tr>

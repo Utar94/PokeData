@@ -14,7 +14,7 @@ async function execute<TData, TResult>(method: string, url: string, data?: TData
 
   const input = combineURL(apiBaseUrl, url);
 
-  const response: Response = await fetch(input, { method, headers, body /*credentials: "include"*/ }); // TODO(fpion): credentials
+  const response: Response = await fetch(input, { method, headers, body });
 
   let result: unknown = undefined;
   const resultType: string | null = response.headers.get(contentType);

@@ -1,2 +1,8 @@
 /// <reference types="vite/client" />
-// VITE_APP_API_BASE_URL // TODO(fpion): implement
+interface ImportMetaEnv {
+  readonly VITE_APP_API_BASE_URL: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
