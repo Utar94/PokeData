@@ -1,9 +1,9 @@
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import "logitar-vue3-ui/dist/style.css"; // TODO(fpion): export css
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 
+import "./assets/style.css"; // TODO(fpion): import from library
 import "./fontAwesome";
 import App from "./App.vue";
 import router from "./router";

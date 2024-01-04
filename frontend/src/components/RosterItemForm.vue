@@ -155,7 +155,7 @@ onMounted(async () => {
             :disabled="types.length === 0"
             id="secondary-type"
             :value="payload.secondaryType || ''"
-            @input="payload.secondaryType = parsingUtils.parseNumber(($event.target as HTMLSelectElement).value) || 0"
+            @input="payload.secondaryType = parsingUtils.parseNumber(($event.target as HTMLSelectElement).value) || undefined"
           >
             <option value="">Select a Pokémon type</option>
             <option v-for="pokemonType in secondaryTypes" :key="pokemonType.number" :value="pokemonType.number">
