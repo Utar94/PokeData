@@ -2,10 +2,10 @@
 import { TarButton } from "logitar-vue3-ui";
 
 import RosterItem from "./RosterItem.vue";
-import type { PokemonRoster, RosterItem as RosterItemType } from "@/types/roster";
+import type { RosterItem as RosterItemType } from "@/types/roster";
 
 defineProps<{
-  roster: PokemonRoster;
+  items: RosterItemType[];
 }>();
 
 defineEmits<{
@@ -23,7 +23,7 @@ defineEmits<{
       </tr>
     </thead>
     <tbody>
-      <tr v-for="item in roster.items" :key="item.speciesId">
+      <tr v-for="item in items" :key="item.speciesId">
         <td>
           <RosterItem :pokemon="item.source" />
         </td>

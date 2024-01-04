@@ -46,13 +46,13 @@ onMounted(refresh);
     </div>
     <TarTabs v-if="roster">
       <TarTab active title="Selection">
-        <RosterSelection :roster="roster" @selected="source = $event" />
+        <RosterSelection :items="roster.items" @selected="source = $event" />
       </TarTab>
       <TarTab :disabled="!source" title="Edit">
         <RosterEdit v-if="source && roster" :item="source" :roster="roster" @saved="onSave" />
       </TarTab>
       <TarTab title="Statistics">
-        <RosterStatistics :roster="roster" />
+        <RosterStatistics :statistics="roster.stats" />
       </TarTab>
     </TarTabs>
   </main>

@@ -2152,10 +2152,10 @@ lodash@^4.17.21:
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
-logitar-vue3-ui@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/logitar-vue3-ui/-/logitar-vue3-ui-2.0.2.tgz#784c0486ae1b4b6f458f279dc37797471b2a5cef"
-  integrity sha512-Vd/q7FiUa3kRVMusqTXJbXWb7aqKJJvrznLTyzx7dqT5w+agVwblp+rh//0Gu1AQlrQXWGdiqKScZeY6Es+EZw==
+logitar-vue3-ui@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/logitar-vue3-ui/-/logitar-vue3-ui-2.0.5.tgz#68e2b5b6726007dd41397d4d32ac8dbbeddf9b7c"
+  integrity sha512-7e6rE/6ledK9+BdrPHraOXneygLE9NEJnGXhFAuOJt/1UTdoxTN3iboU0GLX651y/9ULWFcdtKXTyyaNKc32Dw==
   dependencies:
     md5 "^2.3.0"
     nanoid "^5.0.4"

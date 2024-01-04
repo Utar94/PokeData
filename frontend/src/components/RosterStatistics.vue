@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { TarImage } from "logitar-vue3-ui";
 
-import type { PokemonRoster } from "@/types/roster";
+import type { RosterStatistics } from "@/types/roster";
 
 defineProps<{
-  roster: PokemonRoster;
+  statistics: RosterStatistics;
 }>();
 </script>
 
 <template>
   <div>
-    <p>Selected Pokémon: {{ roster.stats.count }}</p>
+    <p>Selected Pokémon: {{ statistics.count }}</p>
     <div class="row">
       <div class="col">
         <h2>Types</h2>
@@ -23,7 +23,7 @@ defineProps<{
             </tr>
           </thead>
           <tbody>
-            <tr v-for="pokemonType in roster.stats.types" :key="pokemonType.key">
+            <tr v-for="pokemonType in statistics.types" :key="pokemonType.key">
               <td>
                 <TarImage :src="`/img/types/${pokemonType.key.toLowerCase()}.png`" :alt="pokemonType.key" height="24" />
               </td>
@@ -44,7 +44,7 @@ defineProps<{
             </tr>
           </thead>
           <tbody>
-            <tr v-for="region in roster.stats.regions" :key="region.key">
+            <tr v-for="region in statistics.regions" :key="region.key">
               <td>{{ region.key }}</td>
               <td>{{ region.count }}</td>
               <td>{{ (region.percentage * 100).toFixed(2) }}%</td>
