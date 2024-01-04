@@ -4,7 +4,11 @@ namespace PokeData.Contracts.Types;
 
 public record PokemonTypeSortOption : SortOption
 {
-  public new PokemonTypeSort Field => Enum.Parse<PokemonTypeSort>(base.Field);
+  public new PokemonTypeSort Field
+  {
+    get => Enum.Parse<PokemonTypeSort>(base.Field);
+    set => base.Field = value.ToString();
+  }
 
   public PokemonTypeSortOption() : this(PokemonTypeSort.UpdatedOn, isDescending: true)
   {

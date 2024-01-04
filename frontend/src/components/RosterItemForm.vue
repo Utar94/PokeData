@@ -76,7 +76,7 @@ async function submit(): Promise<void> {
 onMounted(async () => {
   regions.value = (
     await searchRegions({ numberIn: [], search: { terms: [], operator: "And" }, sort: [{ field: "Number", isDescending: false }], skip: 0, limit: 0 })
-  ).items; // TODO(fpion): sort not working
+  ).items;
   types.value = (
     await searchPokemonTypes({
       numberIn: [],
@@ -85,7 +85,7 @@ onMounted(async () => {
       skip: 0,
       limit: 0,
     })
-  ).items; // TODO(fpion): sort not working
+  ).items;
 });
 </script>
 
