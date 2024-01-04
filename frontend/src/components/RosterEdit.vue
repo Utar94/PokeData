@@ -6,7 +6,7 @@ import RosterItemForm from "./RosterItemForm.vue";
 import SearchNumber from "./SearchNumber.vue";
 import SearchResultSelect from "./SearchResultSelect.vue";
 import SearchText from "./SearchText.vue";
-import type { PokemonRoster, RosterItem as RosterItemType } from "@/types/roster";
+import type { PokemonRoster, RosterItem as RosterItemType, SavedRosterItem } from "@/types/roster";
 
 const props = defineProps<{
   item: RosterItemType;
@@ -31,7 +31,7 @@ function onSelected(): void {
 }
 
 defineEmits<{
-  (e: "updated"): void;
+  (e: "saved", saved: SavedRosterItem): void;
 }>();
 
 // TODO(fpion): put inside a medium/large modal
@@ -57,5 +57,5 @@ defineEmits<{
   </div>
   <SearchResultSelect :items="roster.items" :search-number="searchNumber" :search-text="searchText" v-model="selectedPokemon" @selected="onSelected" />
   <h4>Properties</h4>
-  <RosterItemForm ref="form" :species-id="item.speciesId" @saved="$emit('updated')" />
+  <RosterItemForm ref="form" :species-id="item.speciesId" @saved="$emit('saved', $event)" />
 </template>

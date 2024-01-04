@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
 import { TarButton, TarCheckbox, parsingUtils } from "logitar-vue3-ui";
+import { computed, inject, onMounted, ref } from "vue";
 
 import type { PokemonType } from "@/types/pokemon";
 import type { Region } from "@/types/region";
-import type { RosterInfo, SaveRosterItemPayload } from "@/types/roster";
+import type { RosterInfo, SaveRosterItemPayload, SavedRosterItem } from "@/types/roster";
 import { saveRosterItem } from "@/api/roster";
 import { searchPokemonTypes } from "@/api/pokemon";
 import { searchRegions } from "@/api/region";
+import { toastsKey, type ToastUtils } from "@/App";
+
+const toasts = inject(toastsKey) as ToastUtils;
 
 const props = defineProps<{
   speciesId: number;
@@ -17,6 +20,9 @@ const loading = ref<boolean>(false);
 const payload = ref<SaveRosterItemPayload>({ number: 0, name: "", region: 0, primaryType: 0, isBaby: false, isLegendary: false, isMythical: false });
 const regions = ref<Region[]>([]);
 const types = ref<PokemonType[]>([]);
+
+const primaryTypes = computed<PokemonType[]>(() => types.value.filter((value) => value.number !== payload.value.secondaryType));
+const secondaryTypes = computed<PokemonType[]>(() => types.value.filter((value) => value.number !== payload.value.primaryType));
 
 function fill(fields?: RosterInfo): void {
   payload.value.number = fields?.number ?? 0;
@@ -49,16 +55,16 @@ function reset(): void {
 }
 
 const emit = defineEmits<{
-  (e: "saved"): void;
+  (e: "saved", saved: SavedRosterItem): void;
 }>();
 async function submit(): Promise<void> {
   if (!loading.value) {
     loading.value = true;
     try {
-      await saveRosterItem(props.speciesId, payload.value);
-      alert("Success!"); // TODO(fpion): success toast
+      const saved = await saveRosterItem(props.speciesId, payload.value);
+      emit("saved", saved);
       reset();
-      emit("saved");
+      toasts.success({ text: "The roster item has been saved successfully." });
       loading.value = false;
     } catch (e: unknown) {
       loading.value = false;
@@ -69,17 +75,17 @@ async function submit(): Promise<void> {
 
 onMounted(async () => {
   regions.value = (
-      await searchRegions({ numberIn: [], search: { terms: [], operator: "And" }, sort: [{ field: "Number", isDescending: false }], skip: 0, limit: 0 })
-    ).items; // TODO(fpion): sort not working
-    types.value = (
-      await searchPokemonTypes({
-        numberIn: [],
-        search: { terms: [], operator: "And" },
-        sort: [{ field: "DisplayName", isDescending: false }],
-        skip: 0,
-        limit: 0,
-      })
-    ).items; // TODO(fpion): sort not working
+    await searchRegions({ numberIn: [], search: { terms: [], operator: "And" }, sort: [{ field: "Number", isDescending: false }], skip: 0, limit: 0 })
+  ).items; // TODO(fpion): sort not working
+  types.value = (
+    await searchPokemonTypes({
+      numberIn: [],
+      search: { terms: [], operator: "And" },
+      sort: [{ field: "DisplayName", isDescending: false }],
+      skip: 0,
+      limit: 0,
+    })
+  ).items; // TODO(fpion): sort not working
 });
 </script>
 
@@ -135,10 +141,9 @@ onMounted(async () => {
             @input="payload.primaryType = parsingUtils.parseNumber(($event.target as HTMLSelectElement).value) || 0"
           >
             <option value="">Select a Pokémon type</option>
-            <option v-for="pokemonType in types" :key="pokemonType.number" :value="pokemonType.number">
+            <option v-for="pokemonType in primaryTypes" :key="pokemonType.number" :value="pokemonType.number">
               {{ pokemonType.displayName ?? pokemonType.uniqueName }}
             </option>
-            <!-- TODO(fpion): exclude secondary type -->
           </select>
           <label for="primary-type">Primary Type <span class="text-danger">*</span></label>
         </div>
@@ -153,10 +158,9 @@ onMounted(async () => {
             @input="payload.secondaryType = parsingUtils.parseNumber(($event.target as HTMLSelectElement).value) || 0"
           >
             <option value="">Select a Pokémon type</option>
-            <option v-for="pokemonType in types" :key="pokemonType.number" :value="pokemonType.number">
+            <option v-for="pokemonType in secondaryTypes" :key="pokemonType.number" :value="pokemonType.number">
               {{ pokemonType.displayName ?? pokemonType.uniqueName }}
             </option>
-            <!-- TODO(fpion): exclude primary type -->
           </select>
           <label for="secondary-type">Secondary Type</label>
         </div>

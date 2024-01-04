@@ -44,3 +44,8 @@ export type SaveRosterItemPayload = {
   isLegendary: boolean;
   isMythical: boolean;
 };
+
+export type SavedRosterItem = {
+  item: RosterItem;
+  stats: RosterStatistics;
+};
