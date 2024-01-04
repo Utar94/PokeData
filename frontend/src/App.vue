@@ -17,6 +17,7 @@ const toastUtils: ToastUtils = {
   error(options: ToastOptions): void {
     toast({
       ...options,
+      duration: options.duration ?? 5000,
       fade: options.fade ?? true,
       text: options.text ?? "An unexpected error has occurred. Please retry again later or contact us if the issue persists.",
       title: options.title ?? "Error",
@@ -26,6 +27,7 @@ const toastUtils: ToastUtils = {
   success(options: ToastOptions): void {
     toast({
       ...options,
+      duration: options.duration ?? 5000,
       fade: options.fade ?? true,
       title: options.title ?? "Success",
       variant: options.variant ?? "success",
@@ -34,6 +36,7 @@ const toastUtils: ToastUtils = {
   warning(options: ToastOptions): void {
     toast({
       ...options,
+      duration: options.duration ?? 5000,
       fade: options.fade ?? true,
       title: options.title ?? "Warning",
       variant: options.variant ?? "warning",

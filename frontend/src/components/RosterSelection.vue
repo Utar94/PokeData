@@ -32,13 +32,13 @@ defineEmits<{
         </td>
         <td>
           <div class="text-end">
-            <TarButton v-if="!item.destination" :icon="['fas', 'plus']" text="Add" variant="success" @click="$emit('selected', item)" />
-            <template v-else>
+            <template v-if="item.destination">
               <TarButton class="me-2" disabled :icon="['fas', 'pen-to-square']" text="Edit" variant="primary" @click="$emit('selected', item)" />
               <TarButton disabled :icon="['fas', 'times']" text="Remove" variant="danger" />
               <!-- TODO(fpion): complete Edit -->
               <!-- TODO(fpion): complete Remove -->
             </template>
+            <TarButton v-else :icon="['fas', 'plus']" text="Add" variant="success" @click="$emit('selected', item)" />
           </div>
         </td>
       </tr>
