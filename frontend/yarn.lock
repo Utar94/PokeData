@@ -576,7 +576,7 @@
   resolved "https://registry.npmjs.org/@pkgr/core/-/core-0.1.0.tgz"
   integrity sha512-Zwq5OCzuwJC2jwqmpEQt7Ds1DTi6BWSwoGkbb1n9pO3hzb35BoJELx7c0T23iDkBGkh2e7tvOtjF3tr3OaQHDQ==
 
-"@popperjs/core@^2.11.8":
+"@popperjs/core@^2.11.8", "@popperjs/core@^2.9.2":
   version "2.11.8"
   resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.11.8.tgz"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
@@ -660,6 +660,13 @@
   version "18.2.2"
   resolved "https://registry.npmjs.org/@tsconfig/node18/-/node18-18.2.2.tgz"
   integrity sha512-d6McJeGsuoRlwWZmVIeE8CUA27lu6jLjvv1JzqmpsytOYYbVi1tHZEnwCNVOXnj4pyLvneZlFlpXUK+X9wBWyw==
+
+"@types/bootstrap@^5.2.10":
+  version "5.2.10"
+  resolved "https://registry.yarnpkg.com/@types/bootstrap/-/bootstrap-5.2.10.tgz#58506463bccc6602bc051487ad8d3a6458f94c6c"
+  integrity sha512-F2X+cd6551tep0MvVZ6nM8v7XgGN/twpdNDjqS1TUM7YFNEtQYWk+dKAnH+T1gr6QgCoGMPl487xw/9hXooa2g==
+  dependencies:
+    "@popperjs/core" "^2.9.2"
 
 "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.6"
@@ -2145,10 +2152,10 @@ lodash@^4.17.21:
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
-logitar-vue3-ui@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/logitar-vue3-ui/-/logitar-vue3-ui-1.0.0.tgz#e90b0a16d322a5ce27a719f7c418ef2af4266004"
-  integrity sha512-DgDetrM0lDuIAe+PFE2757tjAaDVP23q7ZqyGok4xN5oMuy8Wg549MVf88GyzMFjhwk5Dri3b1xxw7KfJgaR/w==
+logitar-vue3-ui@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/logitar-vue3-ui/-/logitar-vue3-ui-2.0.2.tgz#784c0486ae1b4b6f458f279dc37797471b2a5cef"
+  integrity sha512-Vd/q7FiUa3kRVMusqTXJbXWb7aqKJJvrznLTyzx7dqT5w+agVwblp+rh//0Gu1AQlrQXWGdiqKScZeY6Es+EZw==
   dependencies:
     md5 "^2.3.0"
     nanoid "^5.0.4"
@@ -2503,7 +2510,7 @@ pidtree@^0.6.0:
 
 pinia@^2.1.7:
   version "2.1.7"
-  resolved "https://registry.npmjs.org/pinia/-/pinia-2.1.7.tgz"
+  resolved "https://registry.yarnpkg.com/pinia/-/pinia-2.1.7.tgz#4cf5420d9324ca00b7b4984d3fbf693222115bbc"
   integrity sha512-+C2AHFtcFqjPih0zpYuvof37SFxMQ7OEG2zV9jRI12i9BOy3YQVAHwdKtyyc8pDcDyIc33WCIsZaCFWU7WWxGQ==
   dependencies:
     "@vue/devtools-api" "^6.5.0"
@@ -3056,7 +3063,7 @@ vue-component-type-helpers@^1.8.21:
 
 vue-demi@>=0.14.5:
   version "0.14.6"
-  resolved "https://registry.npmjs.org/vue-demi/-/vue-demi-0.14.6.tgz"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.14.6.tgz#dc706582851dc1cdc17a0054f4fec2eb6df74c92"
   integrity sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w==
 
 vue-eslint-parser@^9.3.1:

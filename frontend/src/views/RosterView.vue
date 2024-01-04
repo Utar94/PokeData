@@ -12,11 +12,7 @@ const roster = ref<PokemonRoster>();
 const source = ref<RosterItem>();
 
 async function refresh(): Promise<void> {
-  try {
-    roster.value = await readRoster();
-  } catch (e: unknown) {
-    console.error(e); // TODO(fpion): error handling
-  }
+  roster.value = await readRoster();
 }
 
 onMounted(refresh);

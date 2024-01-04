@@ -59,17 +59,16 @@ async function submit(): Promise<void> {
       alert("Success!"); // TODO(fpion): success toast
       reset();
       emit("saved");
-    } catch (e: unknown) {
-      console.error(e); // TODO(fpion): error handling
-    } finally {
       loading.value = false;
+    } catch (e: unknown) {
+      loading.value = false;
+      throw e;
     }
   }
 }
 
 onMounted(async () => {
-  try {
-    regions.value = (
+  regions.value = (
       await searchRegions({ numberIn: [], search: { terms: [], operator: "And" }, sort: [{ field: "Number", isDescending: false }], skip: 0, limit: 0 })
     ).items; // TODO(fpion): sort not working
     types.value = (
@@ -81,9 +80,6 @@ onMounted(async () => {
         limit: 0,
       })
     ).items; // TODO(fpion): sort not working
-  } catch (e: unknown) {
-    console.error(e); // TODO(fpion): error handling
-  }
 });
 </script>
 
