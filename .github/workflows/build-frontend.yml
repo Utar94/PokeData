@@ -33,13 +33,10 @@ jobs:
         with:
           cmd: install
 
-      - run: cd frontend
-      - run: ls -A
-
       - name: Build for Production
         uses: borales/actions-yarn@v4
         with:
-          cmd: build
+          cmd: --cwd frontend build
 
       - name: Run Tests & Coverage
         uses: borales/actions-yarn@v4
