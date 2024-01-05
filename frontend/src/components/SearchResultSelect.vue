@@ -1,17 +1,32 @@
 <script setup lang="ts">
-import { TarButton, parsingUtils } from "logitar-vue3-ui";
+import { TarButton, TarSelect, parsingUtils, type SelectOption, type SelectSize } from "logitar-vue3-ui";
 import { computed } from "vue";
 
-import type { RosterInfo, RosterItem } from "@/types/roster";
+import type { RosterItem } from "@/types/roster";
 
-const props = defineProps<{
-  items: RosterItem[];
-  modelValue?: number;
-  searchNumber?: number;
-  searchText?: string;
-}>();
+const props = withDefaults(
+  defineProps<{
+    disabled?: boolean;
+    floating?: boolean;
+    id?: string;
+    items: RosterItem[];
+    label?: string;
+    modelValue?: number;
+    placeholder?: string;
+    required?: boolean;
+    searchNumber?: number;
+    searchText?: string;
+    size?: SelectSize;
+  }>(),
+  {
+    floating: true,
+    id: "search-results",
+    label: "Results",
+    placeholder: "Select a Pokémon",
+  },
+);
 
-const results = computed<RosterInfo[]>(() =>
+const options = computed<SelectOption[]>(() =>
   props.items
     .map((item) => item.source)
     .filter((pokemon) => {
@@ -36,7 +51,9 @@ const results = computed<RosterInfo[]>(() =>
       }
 
       return true;
-    }),
+    })
+    .slice(0, 19 + 1)
+    .map(({ name, number }) => ({ text: `#${number.toString().padStart(4, "0")} - ${name}`, value: number.toString() })),
 );
 
 defineEmits<{
@@ -49,24 +66,25 @@ defineEmits<{
   <div class="mb-3">
     <div class="input-group">
       <div class="form-floating">
-        <!-- TODO(fpion): use TarSelect -->
-        <select
-          aria-describedby="select-search-result"
+        <TarSelect
           aria-label="Destination Pokémon"
-          class="form-select"
-          :disabled="results.length === 0"
-          id="search-results"
-          :value="modelValue"
-          @input="$emit('update:model-value', parsingUtils.parseNumber(($event.target as HTMLSelectElement).value))"
+          described-by="select-search-result"
+          :disabled="disabled"
+          :floating="floating"
+          :id="id"
+          :label="label"
+          :model-value="modelValue"
+          :options="options"
+          :placeholder="placeholder"
+          :required="required"
+          :size="size"
+          @update:model-value="$emit('update:model-value', parsingUtils.parseNumber($event))"
         >
-          <option value="">Select a Pokémon</option>
-          <option v-for="result in results" :key="result.number" :value="result.number">
-            {{ `#${result.number.toString().padStart(4, "0")} - ${result.name}` }}
-          </option>
-        </select>
-        <label for="search-results">Results</label>
+          <template #append>
+            <TarButton :disabled="!modelValue" :icon="['fas', 'check']" id="select-search-result" text="Select" @click="$emit('selected')" />
+          </template>
+        </TarSelect>
       </div>
-      <TarButton :disabled="!modelValue" :icon="['fas', 'check']" id="select-search-result" text="Select" @click="$emit('selected')" />
     </div>
   </div>
 </template>
