@@ -13,13 +13,27 @@ internal class RegionRepository : IRegionRepository
     _context = context;
   }
 
-  public async Task<RegionAggregate?> LoadAsync(byte id, CancellationToken cancellationToken)
+  public async Task<RegionAggregate?> LoadAsync(string idOrUniqueName, CancellationToken cancellationToken)
   {
-    RegionEntity? entity = await _context.Regions.AsNoTracking()
-      .Include(x => x.MainGeneration)
-      .SingleOrDefaultAsync(x => x.RegionId == id, cancellationToken);
+    RegionEntity? region = null;
 
-    return entity == null ? null : DomainMapper.ToRegion(entity);
+    if (byte.TryParse(idOrUniqueName, out byte id))
+    {
+      region = await _context.Regions.AsNoTracking()
+        .Include(x => x.MainGeneration)
+        .SingleOrDefaultAsync(x => x.RegionId == id, cancellationToken);
+    }
+
+    if (region == null)
+    {
+      string uniqueNameNormalized = idOrUniqueName.Trim().ToUpper();
+
+      region = await _context.Regions.AsNoTracking()
+        .Include(x => x.MainGeneration)
+        .SingleOrDefaultAsync(x => x.UniqueNameNormalized == uniqueNameNormalized, cancellationToken);
+    }
+
+    return region == null ? null : DomainMapper.ToRegion(region);
   }
 
   public async Task SaveAsync(RegionAggregate region, CancellationToken cancellationToken)

@@ -6,9 +6,9 @@ public record SaveRosterItemPayload
   public string Name { get; set; } = string.Empty;
   public string? Category { get; set; }
 
-  public byte Region { get; set; }
-  public byte PrimaryType { get; set; }
-  public byte? SecondaryType { get; set; }
+  public string Region { get; set; } = string.Empty;
+  public string PrimaryType { get; set; } = string.Empty;
+  public string? SecondaryType { get; set; }
 
   public bool IsBaby { get; set; }
   public bool IsLegendary { get; set; }
