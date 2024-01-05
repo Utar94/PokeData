@@ -2,6 +2,7 @@
 using PokeData.EntityFrameworkCore.Relational;
 using PokeData.EntityFrameworkCore.SqlServer;
 using PokeData.Extensions;
+using PokeData.Filters;
 using PokeData.Infrastructure.PokeApiClient;
 using PokeData.Settings;
 
@@ -22,7 +23,7 @@ internal class Startup : StartupBase
   {
     base.ConfigureServices(services);
 
-    services.AddControllers()
+    services.AddControllers(options => options.Filters.Add<PokemonExceptionFilter>())
       .AddJsonOptions(options =>
       {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
