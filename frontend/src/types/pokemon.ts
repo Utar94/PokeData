@@ -14,6 +14,6 @@ export type PokemonTypeSortOption = SortOption & {
 };
 
 export type SearchPokemonTypesPayload = SearchPayload & {
-  numberIn: number[];
-  sort: PokemonTypeSortOption[];
+  numberIn?: number[];
+  sort?: PokemonTypeSortOption[];
 };

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TarInput, type InputSize, parsingUtils } from "logitar-vue3-ui";
+import { TarInput, type InputSize } from "logitar-vue3-ui";
 import { computed } from "vue";
 
 const props = withDefaults(
@@ -10,25 +10,23 @@ const props = withDefaults(
     label?: string;
     max?: number;
     min?: number;
-    modelValue?: number;
+    modelValue?: string;
     placeholder?: string;
     required?: boolean;
     size?: InputSize;
   }>(),
   {
     floating: true,
-    id: "number",
-    label: "Number",
-    max: 9999,
-    min: 1,
-    modelValue: 0,
+    id: "name",
+    label: "Name",
+    max: 128,
   },
 );
 
 const inputPlaceholder = computed<string | undefined>(() => (props.floating ? props.placeholder ?? props.label : props.placeholder));
 
 defineEmits<{
-  (e: "update:model-value", value: number): void;
+  (e: "update:model-value", value?: string): void;
 }>();
 </script>
 
@@ -44,8 +42,7 @@ defineEmits<{
     :placeholder="inputPlaceholder"
     :required="required"
     :size="size"
-    step="1"
-    type="number"
-    @update:model-value="$emit('update:model-value', parsingUtils.parseNumber($event) ?? 0)"
+    type="text"
+    @update:model-value="$emit('update:model-value', $event)"
   />
 </template>

@@ -2,12 +2,15 @@
 import { TarButton, TarCheckbox, TarModal } from "logitar-vue3-ui";
 import { computed, inject, onMounted, ref, watch } from "vue";
 
+import PokemonCategoryInput from "./PokemonCategoryInput.vue";
+import PokemonNameInput from "./PokemonNameInput.vue";
 import PokemonNumberInput from "./PokemonNumberInput.vue";
+import PokemonTypeSelect from "./PokemonTypeSelect.vue";
 import RegionSelect from "./RegionSelect.vue";
 import RosterItem from "./RosterItem.vue";
-import SearchNumber from "./SearchNumber.vue";
+import SearchNumberInput from "./SearchNumberInput.vue";
 import SearchResultSelect from "./SearchResultSelect.vue";
-import SearchText from "./SearchText.vue";
+import SearchTextInput from "./SearchTextInput.vue";
 import type { PokemonType } from "@/types/pokemon";
 import type { RosterInfo, RosterItem as RosterItemType, SaveRosterItemPayload, SavedRosterItem } from "@/types/roster";
 import { saveRosterItem } from "@/api/roster";
@@ -47,8 +50,6 @@ const hasChanges = computed<boolean>(() => {
     left.isMythical !== right.isMythical
   );
 });
-const primaryTypes = computed<PokemonType[]>(() => types.value.filter((value) => value.uniqueName !== payload.value.secondaryType));
-const secondaryTypes = computed<PokemonType[]>(() => types.value.filter((value) => value.uniqueName !== payload.value.primaryType));
 
 function onSelected(): void {
   const item: RosterItemType | undefined = props.items.find((item) => item.source.number === selectedPokemon.value);
@@ -131,10 +132,10 @@ onMounted(async () => {
       <h4>Search</h4>
       <div class="row">
         <div class="col">
-          <SearchNumber v-model="searchNumber" />
+          <SearchNumberInput v-model="searchNumber" />
         </div>
         <div class="col">
-          <SearchText v-model="searchText" />
+          <SearchTextInput v-model="searchText" />
         </div>
       </div>
       <SearchResultSelect :items="items" :search-number="searchNumber" :search-text="searchText" v-model="selectedPokemon" @selected="onSelected" />
@@ -145,20 +146,12 @@ onMounted(async () => {
             <PokemonNumberInput required v-model="payload.number" />
           </div>
           <div class="col">
-            <div class="form-floating mb-3">
-              <!-- TODO(fpion): use TarInput -->
-              <input class="form-control" id="name" maxlength="128" placeholder="Name" required type="text" v-model="payload.name" />
-              <label for="name">Name <span class="text-danger">*</span></label>
-            </div>
+            <PokemonNameInput required v-model="payload.name" />
           </div>
         </div>
         <div class="row">
           <div class="col">
-            <div class="form-floating mb-3">
-              <!-- TODO(fpion): use TarInput -->
-              <input class="form-control" id="category" maxlength="128" placeholder="Category" type="text" v-model="payload.category" />
-              <label for="category">Category</label>
-            </div>
+            <PokemonCategoryInput v-model="payload.category" />
           </div>
           <div class="col">
             <RegionSelect required v-model="payload.region" />
@@ -166,28 +159,10 @@ onMounted(async () => {
         </div>
         <div class="row">
           <div class="col">
-            <div class="form-floating mb-3">
-              <!-- TODO(fpion): use TarSelect -->
-              <select class="form-select" :disabled="types.length === 0" id="primary-type" required v-model="payload.primaryType">
-                <option value="">Select a Pokémon type</option>
-                <option v-for="pokemonType in primaryTypes" :key="pokemonType.number" :value="pokemonType.uniqueName">
-                  {{ pokemonType.displayName ?? pokemonType.uniqueName }}
-                </option>
-              </select>
-              <label for="primary-type">Primary Type <span class="text-danger">*</span></label>
-            </div>
+            <PokemonTypeSelect :exclude="[payload.secondaryType ?? '']" id="primary-type" label="Primary Type" required v-model="payload.primaryType" />
           </div>
           <div class="col">
-            <div class="form-floating mb-3">
-              <!-- TODO(fpion): use TarSelect -->
-              <select class="form-select" :disabled="types.length === 0" id="secondary-type" v-model="payload.secondaryType">
-                <option value="">Select a Pokémon type</option>
-                <option v-for="pokemonType in secondaryTypes" :key="pokemonType.number" :value="pokemonType.uniqueName">
-                  {{ pokemonType.displayName ?? pokemonType.uniqueName }}
-                </option>
-              </select>
-              <label for="secondary-type">Secondary Type</label>
-            </div>
+            <PokemonTypeSelect :exclude="[payload.primaryType]" id="secondary-type" label="Secondary Type" required v-model="payload.secondaryType" />
           </div>
         </div>
         <div class="row">

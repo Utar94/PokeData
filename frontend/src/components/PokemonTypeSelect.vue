@@ -2,12 +2,13 @@
 import { TarSelect, type SelectOption, type SelectSize } from "logitar-vue3-ui";
 import { computed, onMounted, ref } from "vue";
 
-import type { Region } from "@/types/region";
-import { searchRegions } from "@/api/region";
+import type { PokemonType } from "@/types/pokemon";
+import { searchPokemonTypes } from "@/api/pokemon";
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     disabled?: boolean;
+    exclude?: string[];
     floating?: boolean;
     id?: string;
     label?: string;
@@ -17,18 +18,23 @@ withDefaults(
     size?: SelectSize;
   }>(),
   {
+    exclude: () => [],
     floating: true,
-    id: "region",
-    label: "Region",
-    placeholder: "Select a region",
+    id: "pokemon-type",
+    label: "Pokémon Type",
+    placeholder: "Select a Pokémon type",
   },
 );
 
-const regions = ref<Region[]>([]);
+const pokemonTypes = ref<PokemonType[]>([]);
 
-const options = computed<SelectOption[]>(() => regions.value.map(({ displayName, uniqueName }) => ({ text: displayName, value: uniqueName })));
+const options = computed<SelectOption[]>(() =>
+  pokemonTypes.value
+    .filter(({ uniqueName }) => !props.exclude.includes(uniqueName))
+    .map(({ displayName, uniqueName }) => ({ text: displayName, value: uniqueName })),
+);
 
-onMounted(async () => (regions.value = (await searchRegions({ sort: [{ field: "Number", isDescending: false }] })).items));
+onMounted(async () => (pokemonTypes.value = (await searchPokemonTypes({ sort: [{ field: "DisplayName", isDescending: false }] })).items));
 
 defineEmits<{
   (e: "update:model-value", value: string): void;
