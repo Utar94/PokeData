@@ -20,6 +20,17 @@ services:
     restart: unless-stopped
     environment:
       ASPNETCORE_Environment: Development
+      Cors:AllowedOrigins:0: http://localhost:43044
       SQLCONNSTR_Master: Server=pokedata_mssql;Database=Pokemon;User Id=SA;Password=m7tPnE6dB5TQxYCW;Persist Security Info=False;Encrypt=False;
     ports:
       - 43551:8080
+
+  pokedata_app:
+    build:
+      context: ./frontend
+    image: pokedata_app
+    container_name: PokeData_app
+    depends_on:
+      - pokedata_api
+    ports:
+      - 43044:80

@@ -30,5 +30,3 @@ app.config.errorHandler = (e) => {
 };
 
 app.mount("#app");
-
-// TODO(fpion): add to docker-compose.yml
