@@ -29,16 +29,10 @@ jobs:
         run: corepack enable
 
       - name: Install dependencies
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: install
+        run: yarn install
 
       - name: Build for Production
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: build
+        run: yarn build
 
       - name: Run Tests & Coverage
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: test
+        run: yarn test
