@@ -33,6 +33,7 @@ jobs:
         with:
           cmd: install
 
+      - run: cd frontend
       - run: ls -A
 
       - name: Build for Production
