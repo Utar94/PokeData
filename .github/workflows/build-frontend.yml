@@ -30,18 +30,9 @@ jobs:
 
       - name: Install dependencies
         run: yarn install
-        # uses: borales/actions-yarn@v4
-        # with:
-        #   cmd: --cwd frontend install
 
       - name: Build for Production
         run: yarn build
-        # uses: borales/actions-yarn@v4
-        # with:
-        #   cmd: --cwd frontend build
 
       - name: Run Tests & Coverage
         run: yarn test
-        # uses: borales/actions-yarn@v4
-        # with:
-        #   cmd: --cwd frontend test
