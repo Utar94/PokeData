@@ -29,16 +29,19 @@ jobs:
         run: corepack enable
 
       - name: Install dependencies
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: --cwd frontend install
+        run: yarn install
+        # uses: borales/actions-yarn@v4
+        # with:
+        #   cmd: --cwd frontend install
 
       - name: Build for Production
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: --cwd frontend build
+        run: yarn build
+        # uses: borales/actions-yarn@v4
+        # with:
+        #   cmd: --cwd frontend build
 
       - name: Run Tests & Coverage
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: --cwd frontend test
+        run: yarn test
+        # uses: borales/actions-yarn@v4
+        # with:
+        #   cmd: --cwd frontend test
