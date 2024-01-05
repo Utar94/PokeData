@@ -19,6 +19,11 @@ internal class PokemonRosterService : IPokemonRosterService
     return await _mediator.Send(new ReadPokemonRosterQuery(), cancellationToken);
   }
 
+  public async Task RemoveItemAsync(ushort speciesId, CancellationToken cancellationToken)
+  {
+    await _mediator.Send(new RemoveRosterItemCommand(speciesId), cancellationToken);
+  }
+
   public async Task SaveItemAsync(ushort speciesId, SaveRosterItemPayload payload, CancellationToken cancellationToken)
   {
     await _mediator.Send(new SaveRosterItemCommand(speciesId, payload), cancellationToken);

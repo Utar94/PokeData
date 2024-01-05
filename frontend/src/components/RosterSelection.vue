@@ -9,6 +9,7 @@ defineProps<{
 }>();
 
 defineEmits<{
+  (e: "removed", pokemon: RosterItemType): void;
   (e: "selected", pokemon: RosterItemType): void;
 }>();
 </script>
@@ -37,8 +38,7 @@ defineEmits<{
           <div class="text-end">
             <template v-if="item.destination">
               <TarButton class="me-2" :icon="['fas', 'pen-to-square']" text="Edit" variant="primary" @click="$emit('selected', item)" />
-              <TarButton disabled :icon="['fas', 'times']" text="Remove" variant="danger" />
-              <!-- TODO(fpion): complete Remove -->
+              <TarButton :icon="['fas', 'trash-can']" text="Remove" variant="danger" @click="$emit('removed', item)" />
             </template>
             <TarButton v-else :icon="['fas', 'plus']" text="Add" variant="success" @click="$emit('selected', item)" />
           </div>
