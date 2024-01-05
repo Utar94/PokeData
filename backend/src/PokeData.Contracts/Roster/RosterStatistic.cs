@@ -10,6 +10,6 @@ public record RosterStatistic
   {
     Key = key,
     Count = count,
-    Percentage = count / (double)total
+    Percentage = total == 0 ? 0 : count / (double)total
   };
 }
