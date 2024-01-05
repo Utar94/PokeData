@@ -3,7 +3,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 
-import "./assets/style.css"; // TODO(fpion): import from library
+import "./assets/logitar-vue3-ui.css"; // TODO(fpion): import from library
+import "./assets/style.css";
+
 import "./fontAwesome";
 import App from "./App.vue";
 import router from "./router";
@@ -29,4 +31,4 @@ app.config.errorHandler = (e) => {
 
 app.mount("#app");
 
-// Add to docker-compose.yml
+// TODO(fpion): add to docker-compose.yml

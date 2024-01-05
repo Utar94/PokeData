@@ -20,6 +20,7 @@ const props = withDefaults(
   },
 );
 
+const clearId = computed<string>(() => `${props.id}-clear`);
 const inputPlaceholder = computed<string | undefined>(() => (props.floating ? props.placeholder ?? props.label : props.placeholder));
 
 defineEmits<{
@@ -29,7 +30,7 @@ defineEmits<{
 
 <template>
   <TarInput
-    described-by="clear-search-text"
+    :described-by="clearId"
     :disabled="disabled"
     :floating="floating"
     :label="label"
@@ -41,16 +42,7 @@ defineEmits<{
     @update:model-value="$emit('update:model-value', $event)"
   >
     <template #append>
-      <TarButton :icon="['fas', 'times']" id="clear-search-text" variant="danger" @click="$emit('update:model-value', undefined)" />
+      <TarButton :disabled="!modelValue" :icon="['fas', 'times']" :id="clearId" variant="danger" @click="$emit('update:model-value', undefined)" />
     </template>
   </TarInput>
 </template>
-
-<style scoped>
-input[type="search"]::-webkit-search-decoration,
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-results-button,
-input[type="search"]::-webkit-search-results-decoration {
-  -webkit-appearance: none;
-}
-</style>
