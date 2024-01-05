@@ -52,7 +52,7 @@ const options = computed<SelectOption[]>(() =>
 
       return true;
     })
-    .slice(0, 19 + 1)
+    .slice(0, 19) // NOTE(fpion): only display the placeholder and the 19 first results to avoid a scrollable select.
     .map(({ name, number }) => ({ text: `#${number.toString().padStart(4, "0")} - ${name}`, value: number.toString() })),
 );
 
@@ -63,28 +63,22 @@ defineEmits<{
 </script>
 
 <template>
-  <div class="mb-3">
-    <div class="input-group">
-      <div class="form-floating">
-        <TarSelect
-          aria-label="Destination Pokémon"
-          described-by="select-search-result"
-          :disabled="disabled"
-          :floating="floating"
-          :id="id"
-          :label="label"
-          :model-value="modelValue"
-          :options="options"
-          :placeholder="placeholder"
-          :required="required"
-          :size="size"
-          @update:model-value="$emit('update:model-value', parsingUtils.parseNumber($event))"
-        >
-          <template #append>
-            <TarButton :disabled="!modelValue" :icon="['fas', 'check']" id="select-search-result" text="Select" @click="$emit('selected')" />
-          </template>
-        </TarSelect>
-      </div>
-    </div>
-  </div>
+  <TarSelect
+    aria-label="Destination Pokémon"
+    described-by="select-search-result"
+    :disabled="disabled"
+    :floating="floating"
+    :id="id"
+    :label="label"
+    :model-value="modelValue"
+    :options="options"
+    :placeholder="placeholder"
+    :required="required"
+    :size="size"
+    @update:model-value="$emit('update:model-value', parsingUtils.parseNumber($event))"
+  >
+    <template #append>
+      <TarButton :disabled="!modelValue" :icon="['fas', 'check']" id="select-search-result" text="Select" @click="$emit('selected')" />
+    </template>
+  </TarSelect>
 </template>

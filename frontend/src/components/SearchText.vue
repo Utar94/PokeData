@@ -1,9 +1,26 @@
 <script setup lang="ts">
-import { TarButton } from "logitar-vue3-ui";
+import { TarButton, TarInput, type InputSize } from "logitar-vue3-ui";
+import { computed } from "vue";
 
-defineProps<{
-  modelValue?: string;
-}>();
+const props = withDefaults(
+  defineProps<{
+    disabled?: boolean;
+    floating?: boolean;
+    id?: string;
+    label?: string;
+    modelValue?: string;
+    placeholder?: string;
+    required?: boolean;
+    size?: InputSize;
+  }>(),
+  {
+    floating: true,
+    id: "search-text",
+    label: "Search",
+  },
+);
+
+const inputPlaceholder = computed<string | undefined>(() => (props.floating ? props.placeholder ?? props.label : props.placeholder));
 
 defineEmits<{
   (e: "update:model-value", value?: string): void;
@@ -11,24 +28,22 @@ defineEmits<{
 </script>
 
 <template>
-  <div class="mb-3">
-    <div class="input-group">
-      <div class="form-floating">
-        <!-- TODO(fpion): use TarInput -->
-        <input
-          aria-describedby="clear-search-text"
-          class="form-control"
-          id="search-text"
-          placeholder="Search"
-          type="search"
-          :value="modelValue"
-          @input="$emit('update:model-value', ($event.target as HTMLInputElement).value ?? undefined)"
-        />
-        <label for="search-text">Search</label>
-      </div>
+  <TarInput
+    described-by="clear-search-text"
+    :disabled="disabled"
+    :floating="floating"
+    :label="label"
+    :model-value="modelValue"
+    :placeholder="inputPlaceholder"
+    :required="required"
+    :size="size"
+    type="search"
+    @update:model-value="$emit('update:model-value', $event)"
+  >
+    <template #append>
       <TarButton :icon="['fas', 'times']" id="clear-search-text" variant="danger" @click="$emit('update:model-value', undefined)" />
-    </div>
-  </div>
+    </template>
+  </TarInput>
 </template>
 
 <style scoped>

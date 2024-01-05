@@ -2,6 +2,7 @@
 import { TarButton, TarCheckbox, TarModal } from "logitar-vue3-ui";
 import { computed, inject, onMounted, ref, watch } from "vue";
 
+import PokemonNumberInput from "./PokemonNumberInput.vue";
 import RegionSelect from "./RegionSelect.vue";
 import RosterItem from "./RosterItem.vue";
 import SearchNumber from "./SearchNumber.vue";
@@ -141,11 +142,7 @@ onMounted(async () => {
       <form @submit.prevent="submit" @reset.prevent="reset">
         <div class="row">
           <div class="col">
-            <div class="form-floating mb-3">
-              <!-- TODO(fpion): use TarInput -->
-              <input class="form-control" id="number" min="1" max="9999" placeholder="Number" required type="number" v-model="payload.number" />
-              <label for="number">Number <span class="text-danger">*</span></label>
-            </div>
+            <PokemonNumberInput required v-model="payload.number" />
           </div>
           <div class="col">
             <div class="form-floating mb-3">
