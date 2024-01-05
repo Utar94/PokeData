@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { TarButton, TarCheckbox, TarModal } from "logitar-vue3-ui";
-import { computed, inject, onMounted, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 
 import PokemonCategoryInput from "./PokemonCategoryInput.vue";
 import PokemonNameInput from "./PokemonNameInput.vue";
@@ -11,16 +11,12 @@ import RosterItem from "./RosterItem.vue";
 import SearchNumberInput from "./SearchNumberInput.vue";
 import SearchResultSelect from "./SearchResultSelect.vue";
 import SearchTextInput from "./SearchTextInput.vue";
-import type { PokemonType } from "@/types/pokemon";
 import type { RosterInfo, RosterItem as RosterItemType, SaveRosterItemPayload, SavedRosterItem } from "@/types/roster";
 import { saveRosterItem } from "@/api/roster";
-import { searchPokemonTypes } from "@/api/pokemon";
-import { toastsKey, type ToastUtils } from "@/App";
 
 const defaults = {
   payload: { number: 0, name: "", category: "", region: "", primaryType: "", secondaryType: "", isBaby: false, isLegendary: false, isMythical: false },
 };
-const toasts = inject(toastsKey) as ToastUtils;
 
 const props = defineProps<{
   item?: RosterItemType;
@@ -33,7 +29,6 @@ const payload = ref<SaveRosterItemPayload>({ ...defaults.payload });
 const searchNumber = ref<number>(0);
 const searchText = ref<string>();
 const selectedPokemon = ref<number>();
-const types = ref<PokemonType[]>([]);
 
 const hasChanges = computed<boolean>(() => {
   const left = payload.value;
@@ -82,9 +77,8 @@ async function submit(): Promise<void> {
   if (!loading.value && props.item) {
     loading.value = true;
     try {
-      const saved = await saveRosterItem(props.item?.speciesId, payload.value);
+      const saved = await saveRosterItem(props.item.speciesId, payload.value);
       emit("saved", saved);
-      toasts.success({ text: "The roster item has been saved successfully." });
       loading.value = false;
       modal.value.hide();
     } catch (e: unknown) {
@@ -109,18 +103,6 @@ watch(
 );
 watch(searchNumber, () => (selectedPokemon.value = undefined));
 watch(searchText, () => (selectedPokemon.value = undefined));
-
-onMounted(async () => {
-  types.value = (
-    await searchPokemonTypes({
-      numberIn: [],
-      search: { terms: [], operator: "And" },
-      sort: [{ field: "DisplayName", isDescending: false }],
-      skip: 0,
-      limit: 0,
-    })
-  ).items;
-});
 </script>
 
 <template>
@@ -140,44 +122,42 @@ onMounted(async () => {
       </div>
       <SearchResultSelect :items="items" :search-number="searchNumber" :search-text="searchText" v-model="selectedPokemon" @selected="onSelected" />
       <h4>Properties</h4>
-      <form @submit.prevent="submit" @reset.prevent="reset">
-        <div class="row">
-          <div class="col">
-            <PokemonNumberInput required v-model="payload.number" />
-          </div>
-          <div class="col">
-            <PokemonNameInput required v-model="payload.name" />
+      <div class="row">
+        <div class="col">
+          <PokemonNumberInput required v-model="payload.number" />
+        </div>
+        <div class="col">
+          <PokemonNameInput required v-model="payload.name" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <PokemonCategoryInput v-model="payload.category" />
+        </div>
+        <div class="col">
+          <RegionSelect required v-model="payload.region" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <PokemonTypeSelect :exclude="[payload.secondaryType ?? '']" id="primary-type" label="Primary Type" required v-model="payload.primaryType" />
+        </div>
+        <div class="col">
+          <PokemonTypeSelect :exclude="[payload.primaryType]" id="secondary-type" label="Secondary Type" v-model="payload.secondaryType" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <TarCheckbox id="is-baby" label="Is Baby?" v-model="payload.isBaby" />
+          <TarCheckbox id="is-legendary" label="Is Legendary?" v-model="payload.isLegendary" />
+          <TarCheckbox id="is-mythical" label="Is Mythical?" v-model="payload.isMythical" />
+        </div>
+        <div class="col">
+          <div class="my-3 text-end">
+            <TarButton :disabled="loading" :icon="['fas', 'times']" text="Reset" type="reset" variant="warning" />
           </div>
         </div>
-        <div class="row">
-          <div class="col">
-            <PokemonCategoryInput v-model="payload.category" />
-          </div>
-          <div class="col">
-            <RegionSelect required v-model="payload.region" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <PokemonTypeSelect :exclude="[payload.secondaryType ?? '']" id="primary-type" label="Primary Type" required v-model="payload.primaryType" />
-          </div>
-          <div class="col">
-            <PokemonTypeSelect :exclude="[payload.primaryType]" id="secondary-type" label="Secondary Type" required v-model="payload.secondaryType" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <TarCheckbox id="is-baby" label="Is Baby?" v-model="payload.isBaby" />
-            <TarCheckbox id="is-legendary" label="Is Legendary?" v-model="payload.isLegendary" />
-            <TarCheckbox id="is-mythical" label="Is Mythical?" v-model="payload.isMythical" />
-          </div>
-          <div class="col">
-            <div class="my-3 text-end">
-              <TarButton :disabled="loading" :icon="['fas', 'times']" text="Reset" type="reset" variant="warning" />
-            </div>
-          </div>
-        </div>
-      </form>
+      </div>
       <template #footer>
         <TarButton :icon="['fas', 'ban']" text="Cancel" variant="secondary" @click="modal.hide()" />
         <TarButton :disabled="loading || !hasChanges" :icon="['fas', 'floppy-disk']" :loading="loading" text="Save" type="submit" />
