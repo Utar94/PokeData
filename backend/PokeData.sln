@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeData.EntityFrameworkCor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeData", "src\PokeData\PokeData.csproj", "{1448F506-73E9-4664-A419-002B79A8C276}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeData.Contracts", "src\PokeData.Contracts\PokeData.Contracts.csproj", "{6F2213F6-F202-4C6E-B5DA-5957213C917E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeData.Contracts", "src\PokeData.Contracts\PokeData.Contracts.csproj", "{6F2213F6-F202-4C6E-B5DA-5957213C917E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

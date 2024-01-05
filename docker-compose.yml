@@ -20,6 +20,6 @@ services:
     restart: unless-stopped
     environment:
       ASPNETCORE_Environment: Development
-      SQLCONNSTR_Master: Server=pokedata_mssql,27945;Database=Pokemon;User Id=SA;Password=m7tPnE6dB5TQxYCW;Persist Security Info=False;Encrypt=False;
+      SQLCONNSTR_Master: Server=pokedata_mssql;Database=Pokemon;User Id=SA;Password=m7tPnE6dB5TQxYCW;Persist Security Info=False;Encrypt=False;
     ports:
       - 43551:8080

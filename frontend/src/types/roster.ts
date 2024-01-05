@@ -37,9 +37,9 @@ export type SaveRosterItemPayload = {
   number: number;
   name: string;
   category?: string;
-  region: number;
-  primaryType: number;
-  secondaryType?: number;
+  region: string;
+  primaryType: string;
+  secondaryType?: string;
   isBaby: boolean;
   isLegendary: boolean;
   isMythical: boolean;

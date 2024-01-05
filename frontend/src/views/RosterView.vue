@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 import { TarButton, TarTab, TarTabs } from "logitar-vue3-ui";
 
-import RosterEdit from "@/components/RosterEdit.vue";
+import RosterEditModal from "@/components/RosterEditModal.vue";
 import RosterSelection from "@/components/RosterSelection.vue";
 import RosterStatistics from "@/components/RosterStatistics.vue";
 import type { PokemonRoster, RosterItem, SavedRosterItem } from "@/types/roster";
@@ -10,7 +10,8 @@ import { readRoster } from "@/api/roster";
 
 const loading = ref<boolean>(false);
 const roster = ref<PokemonRoster>();
-const source = ref<RosterItem>();
+const selectedItem = ref<RosterItem>();
+const editModal = ref<InstanceType<typeof RosterEditModal>>();
 
 async function refresh(): Promise<void> {
   if (!loading.value) {
@@ -27,12 +28,17 @@ async function refresh(): Promise<void> {
 
 function onSave(saved: SavedRosterItem): void {
   if (roster.value) {
-    const index = roster.value.items.findIndex((item) => item.speciesId === source.value?.speciesId);
+    const index = roster.value.items.findIndex((item) => item.speciesId === selectedItem.value?.speciesId);
     if (index >= 0) {
       roster.value.items.splice(index, 1, saved.item);
     }
     roster.value.stats = saved.stats;
   }
+}
+
+function onSelected(item: RosterItem): void {
+  selectedItem.value = item;
+  editModal.value?.show();
 }
 
 onMounted(refresh);
@@ -46,10 +52,8 @@ onMounted(refresh);
     </div>
     <TarTabs v-if="roster">
       <TarTab active title="Selection">
-        <RosterSelection :items="roster.items" @selected="source = $event" />
-      </TarTab>
-      <TarTab :disabled="!source" title="Edit">
-        <RosterEdit v-if="source && roster" :item="source" :roster="roster" @saved="onSave" />
+        <RosterSelection :items="roster.items" @selected="onSelected" />
+        <RosterEditModal :item="selectedItem" :items="roster.items" ref="editModal" @saved="onSave" />
       </TarTab>
       <TarTab title="Statistics">
         <RosterStatistics :statistics="roster.stats" />

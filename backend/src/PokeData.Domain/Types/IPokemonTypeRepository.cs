@@ -2,5 +2,5 @@
 
 public interface IPokemonTypeRepository
 {
-  Task<PokemonType?> LoadAsync(byte id, CancellationToken cancellationToken = default);
+  Task<PokemonType?> LoadAsync(string idOrUniqueName, CancellationToken cancellationToken = default);
 }

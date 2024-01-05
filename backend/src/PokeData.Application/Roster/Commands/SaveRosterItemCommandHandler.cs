@@ -40,10 +40,10 @@ internal class SaveRosterItemCommandHandler : IRequestHandler<SaveRosterItemComm
     PokemonType primaryType = await _typeRepository.LoadAsync(payload.PrimaryType, cancellationToken)
       ?? throw new AggregateNotFoundException<PokemonType>(payload.PrimaryType.ToString(), nameof(payload.PrimaryType));
     PokemonType? secondaryType = null;
-    if (payload.SecondaryType.HasValue)
+    if (!string.IsNullOrWhiteSpace(payload.SecondaryType))
     {
-      secondaryType = await _typeRepository.LoadAsync(payload.SecondaryType.Value, cancellationToken)
-        ?? throw new AggregateNotFoundException<PokemonType>(payload.SecondaryType.Value.ToString(), nameof(payload.SecondaryType));
+      secondaryType = await _typeRepository.LoadAsync(payload.SecondaryType, cancellationToken)
+        ?? throw new AggregateNotFoundException<PokemonType>(payload.SecondaryType, nameof(payload.SecondaryType));
     }
 
     PokemonRoster roster = new()

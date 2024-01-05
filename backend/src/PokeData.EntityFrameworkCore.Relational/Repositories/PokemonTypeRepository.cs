@@ -14,10 +14,23 @@ internal class PokemonTypeRepository : IPokemonTypeRepository
     _context = context;
   }
 
-  public async Task<PokemonType?> LoadAsync(byte id, CancellationToken cancellationToken)
+  public async Task<PokemonType?> LoadAsync(string idOrUniqueName, CancellationToken cancellationToken)
   {
-    PokemonTypeEntity? type = await _context.PokemonTypes.AsNoTracking()
-      .SingleOrDefaultAsync(x => x.PokemonTypeId == id, cancellationToken);
+    PokemonTypeEntity? type = null;
+
+    if (byte.TryParse(idOrUniqueName, out byte id))
+    {
+      type = await _context.PokemonTypes.AsNoTracking()
+        .SingleOrDefaultAsync(x => x.PokemonTypeId == id, cancellationToken);
+    }
+
+    if (type == null)
+    {
+      string uniqueNameNormalized = idOrUniqueName.Trim().ToUpper();
+
+      type = await _context.PokemonTypes.AsNoTracking()
+        .SingleOrDefaultAsync(x => x.UniqueNameNormalized == uniqueNameNormalized, cancellationToken);
+    }
 
     return type == null ? null : DomainMapper.ToPokemonType(type);
   }

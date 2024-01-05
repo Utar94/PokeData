@@ -1,8 +1,9 @@
 ﻿using Logitar;
+using PokeData.Contracts.Errors;
 
 namespace PokeData.Application;
 
-public class AggregateNotFoundException : Exception
+public class AggregateNotFoundException : Exception, IErrorException
 {
   public const string ErrorMessage = "The specified aggregate could not be found.";
 
@@ -21,6 +22,12 @@ public class AggregateNotFoundException : Exception
     get => (string?)Data[nameof(PropertyName)];
     private set => Data[nameof(PropertyName)] = value;
   }
+
+  public Error Error => new(this.GetErrorCode(), ErrorMessage, new ErrorData[]
+  {
+    new(nameof(AggregateId), AggregateId),
+    new(nameof(PropertyName), PropertyName)
+  });
 
   public AggregateNotFoundException(Type type, string aggregateId, string? propertyName = null) : base(BuildMessage(type, aggregateId, propertyName))
   {

@@ -19,6 +19,7 @@ app.config.errorHandler = (e) => {
 
   const toasts = useToastStore();
   toasts.add({
+    duration: 5000,
     fade: true,
     text: "An unexpected error has occurred. Please retry again later or contact us if the issue persists.",
     title: "Error",
