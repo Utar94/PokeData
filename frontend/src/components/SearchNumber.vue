@@ -34,7 +34,7 @@ defineEmits<{
 
 <template>
   <TarInput
-    aria-describedby="clear-search-number"
+    described-by="clear-search-number"
     :disabled="disabled"
     :floating="floating"
     :id="id"
