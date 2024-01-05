@@ -14,6 +14,7 @@ defineEmits<{
   <div class="mb-3">
     <div class="input-group">
       <div class="form-floating">
+        <!-- TODO(fpion): use TarInput -->
         <input
           aria-describedby="clear-search-text"
           class="form-control"

@@ -16,6 +16,6 @@ export type RegionSortOption = SortOption & {
 };
 
 export type SearchRegionsPayload = SearchPayload & {
-  numberIn: number[];
-  sort: RegionSortOption[];
+  numberIn?: number[];
+  sort?: RegionSortOption[];
 };

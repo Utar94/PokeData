@@ -49,6 +49,7 @@ defineEmits<{
   <div class="mb-3">
     <div class="input-group">
       <div class="form-floating">
+        <!-- TODO(fpion): use TarSelect -->
         <select
           aria-describedby="select-search-result"
           aria-label="Destination Pokémon"

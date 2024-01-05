@@ -1,9 +1,31 @@
 <script setup lang="ts">
-import { TarButton, parsingUtils } from "logitar-vue3-ui";
+import { TarButton, TarInput, parsingUtils, type InputSize } from "logitar-vue3-ui";
+import { computed } from "vue";
 
-defineProps<{
-  modelValue: number;
-}>();
+const props = withDefaults(
+  defineProps<{
+    disabled?: boolean;
+    floating?: boolean;
+    id?: string;
+    label?: string;
+    max?: number;
+    min?: number;
+    modelValue?: number;
+    placeholder?: string;
+    required?: boolean;
+    size?: InputSize;
+  }>(),
+  {
+    floating: true,
+    id: "search-number",
+    label: "Number",
+    min: 0,
+    max: 9999,
+    modelValue: 0,
+  },
+);
+
+const inputPlaceholder = computed<string | undefined>(() => (props.floating ? props.placeholder ?? props.label : props.placeholder));
 
 defineEmits<{
   (e: "update:model-value", value: number): void;
@@ -11,23 +33,24 @@ defineEmits<{
 </script>
 
 <template>
-  <div class="mb-3">
-    <div class="input-group">
-      <div class="form-floating">
-        <input
-          aria-describedby="clear-search-number"
-          class="form-control"
-          id="search-number"
-          min="1"
-          max="1025"
-          placeholder="Number"
-          type="number"
-          :value="modelValue"
-          @input="$emit('update:model-value', parsingUtils.parseNumber(($event.target as HTMLInputElement).value) ?? 0)"
-        />
-        <label for="search-number">Number</label>
-      </div>
+  <TarInput
+    aria-describedby="clear-search-number"
+    :disabled="disabled"
+    :floating="floating"
+    :id="id"
+    :label="label"
+    :max="max"
+    :min="min"
+    :model-value="modelValue"
+    :placeholder="inputPlaceholder"
+    :required="required"
+    :size="size"
+    step="1"
+    type="number"
+    @update:model-value="$emit('update:model-value', parsingUtils.parseNumber($event) ?? 0)"
+  >
+    <template #append>
       <TarButton :icon="['fas', 'times']" id="clear-search-number" variant="danger" @click="$emit('update:model-value', 0)" />
-    </div>
-  </div>
+    </template>
+  </TarInput>
 </template>

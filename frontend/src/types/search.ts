@@ -1,10 +1,10 @@
 export type SearchOperator = "And" | "Or";
 
 export type SearchPayload = {
-  search: TextSearch;
-  sort: SortOption[];
-  skip: number;
-  limit: number;
+  search?: TextSearch;
+  sort?: SortOption[];
+  skip?: number;
+  limit?: number;
 };
 
 export type SearchResults<T> = {
@@ -18,7 +18,7 @@ export type SearchTerm = {
 
 export type SortOption = {
   field: string;
-  isDescending: boolean;
+  isDescending?: boolean;
 };
 
 export type TextSearch = {
