@@ -1,14 +1,19 @@
-﻿using System.Diagnostics;
+﻿using MediatR;
+using PokeData.Seeding.Commands;
 
 namespace PokeData.Seeding;
 
 internal class Worker : BackgroundService
 {
+  private readonly Encoding _encoding;
   private readonly ILogger<Worker> _logger;
+  private readonly IServiceProvider _serviceProvider;
 
-  public Worker(ILogger<Worker> logger)
+  public Worker(IConfiguration configuration, ILogger<Worker> logger, IServiceProvider serviceProvider)
   {
+    _encoding = Encoding.GetEncoding(configuration.GetValue<string>("Encoding") ?? string.Empty);
     _logger = logger;
+    _serviceProvider = serviceProvider;
   }
 
   protected override async Task ExecuteAsync(CancellationToken cancellationToken)
@@ -17,7 +22,11 @@ internal class Worker : BackgroundService
 
     try
     {
-      await Task.Delay(1000, cancellationToken); // TODO(fpion): implement
+      using IServiceScope scope = _serviceProvider.CreateScope();
+      IPublisher publisher = scope.ServiceProvider.GetRequiredService<IPublisher>();
+
+      await publisher.Publish(new SeedRegionsCommand("Data/Regions.csv", _encoding), cancellationToken);
+      await publisher.Publish(new SeedRosterCommand("Data/Roster", _encoding), cancellationToken);
     }
     catch (Exception exception)
     {
