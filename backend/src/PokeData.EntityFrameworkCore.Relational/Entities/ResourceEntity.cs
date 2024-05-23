@@ -10,7 +10,7 @@ internal class ResourceEntity : AggregateEntity
   public string Source { get; private set; } = string.Empty;
   public string SourceNormalized
   {
-    get => Source.ToUpper();
+    get => PokemonDb.Normalize(Source);
     private set { }
   }
 

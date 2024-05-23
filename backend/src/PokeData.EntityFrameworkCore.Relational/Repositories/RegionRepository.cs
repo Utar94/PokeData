@@ -26,7 +26,7 @@ internal class RegionRepository : IRegionRepository
 
     if (region == null)
     {
-      string uniqueNameNormalized = idOrUniqueName.Trim().ToUpper();
+      string uniqueNameNormalized = PokemonDb.Normalize(idOrUniqueName);
 
       region = await _context.Regions.AsNoTracking()
         .Include(x => x.MainGeneration)

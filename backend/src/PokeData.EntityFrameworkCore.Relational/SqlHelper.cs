@@ -40,5 +40,7 @@ public abstract class SqlHelper : ISqlHelper
   }
   protected virtual ConditionalOperator CreateOperator(string pattern) => Operators.IsLike(pattern);
 
+  public abstract IDeleteBuilder DeleteFrom(TableId table);
+
   public abstract IQueryBuilder QueryFrom(TableId table);
 }

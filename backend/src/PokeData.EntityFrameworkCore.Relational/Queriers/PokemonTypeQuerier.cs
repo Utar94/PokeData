@@ -33,7 +33,7 @@ internal class PokemonTypeQuerier : IPokemonTypeQuerier
 
   public async Task<PokemonType?> ReadAsync(string uniqueName, CancellationToken cancellationToken)
   {
-    string uniqueNameNormalized = uniqueName.Trim().ToUpper();
+    string uniqueNameNormalized = PokemonDb.Normalize(uniqueName);
 
     PokemonTypeEntity? region = await _regions.AsNoTracking()
       .SingleOrDefaultAsync(x => x.UniqueNameNormalized == uniqueNameNormalized, cancellationToken);
@@ -43,13 +43,13 @@ internal class PokemonTypeQuerier : IPokemonTypeQuerier
 
   public async Task<SearchResults<PokemonType>> SearchAsync(SearchPokemonTypesPayload payload, CancellationToken cancellationToken)
   {
-    IQueryBuilder builder = _sqlHelper.QueryFrom(Db.PokemonTypes.Table)
-      .SelectAll(Db.PokemonTypes.Table);
-    _sqlHelper.ApplyTextSearch(builder, payload.Search, Db.PokemonTypes.UniqueName, Db.PokemonTypes.DisplayName);
+    IQueryBuilder builder = _sqlHelper.QueryFrom(PokemonDb.PokemonTypes.Table)
+      .SelectAll(PokemonDb.PokemonTypes.Table);
+    _sqlHelper.ApplyTextSearch(builder, payload.Search, PokemonDb.PokemonTypes.UniqueName, PokemonDb.PokemonTypes.DisplayName);
 
     if (payload.NumberIn.Count > 1)
     {
-      builder.Where(Db.PokemonTypes.PokemonTypeId, Operators.IsIn(payload.NumberIn));
+      builder.Where(PokemonDb.PokemonTypes.PokemonTypeId, Operators.IsIn(payload.NumberIn));
     }
 
     IQueryable<PokemonTypeEntity> query = _regions.FromQuery(builder).AsNoTracking();

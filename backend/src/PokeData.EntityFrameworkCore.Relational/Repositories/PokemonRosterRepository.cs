@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Logitar.Data;
+using Microsoft.EntityFrameworkCore;
 using PokeData.Domain.Roster;
 using PokeData.EntityFrameworkCore.Relational.Entities;
 
@@ -7,10 +8,18 @@ namespace PokeData.EntityFrameworkCore.Relational.Repositories;
 internal class PokemonRosterRepository : IPokemonRosterRepository
 {
   private readonly PokemonContext _context;
+  private readonly ISqlHelper _sqlHelper;
 
-  public PokemonRosterRepository(PokemonContext context)
+  public PokemonRosterRepository(PokemonContext context, ISqlHelper sqlHelper)
   {
     _context = context;
+    _sqlHelper = sqlHelper;
+  }
+
+  public async Task<int> DeleteAllAsync(CancellationToken cancellationToken)
+  {
+    ICommand command = _sqlHelper.DeleteFrom(PokemonDb.PokemonRoster.Table).Build();
+    return await _context.Database.ExecuteSqlRawAsync(command.Text, command.Parameters.ToArray());
   }
 
   public async Task DeleteAsync(ushort speciesId, CancellationToken cancellationToken)
