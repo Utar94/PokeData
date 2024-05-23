@@ -3,7 +3,7 @@ using PokeData.Infrastructure.PokeApiClient;
 
 namespace PokeData.ETL;
 
-public class Program
+internal class Program
 {
   public static void Main(string[] args)
   {
