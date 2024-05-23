@@ -37,6 +37,6 @@ public class Worker : BackgroundService
     }
 
     chrono.Stop();
-    _logger.LogInformation("Operation completed in {elapsed}ms.", chrono.ElapsedMilliseconds);
+    _logger.LogInformation("Operation completed in {Elapsed}ms.", chrono.ElapsedMilliseconds);
   }
 }

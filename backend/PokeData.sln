@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeData", "src\PokeData\Po
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeData.Contracts", "src\PokeData.Contracts\PokeData.Contracts.csproj", "{6F2213F6-F202-4C6E-B5DA-5957213C917E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeData.Seeding", "src\PokeData.Seeding\PokeData.Seeding.csproj", "{EA695551-C8E1-44D8-B9A4-8B4E779AA7FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{6F2213F6-F202-4C6E-B5DA-5957213C917E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F2213F6-F202-4C6E-B5DA-5957213C917E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F2213F6-F202-4C6E-B5DA-5957213C917E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA695551-C8E1-44D8-B9A4-8B4E779AA7FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA695551-C8E1-44D8-B9A4-8B4E779AA7FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA695551-C8E1-44D8-B9A4-8B4E779AA7FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA695551-C8E1-44D8-B9A4-8B4E779AA7FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
