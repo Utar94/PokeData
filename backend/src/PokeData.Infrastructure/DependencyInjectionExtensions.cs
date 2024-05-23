@@ -15,6 +15,7 @@ public static class DependencyInjectionExtensions
     return services
       .AddLogitarEventSourcingInfrastructure()
       .AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()))
+      .AddMemoryCache()
       .AddPokeDataApplication()
       .AddSingleton(serviceProvider =>
       {
