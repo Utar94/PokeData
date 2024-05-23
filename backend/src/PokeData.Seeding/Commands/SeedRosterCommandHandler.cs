@@ -1,6 +1,7 @@
 ﻿using CsvHelper;
 using MediatR;
 using PokeData.Contracts.Roster;
+using PokeData.Domain.Roster;
 using PokeData.Domain.Species;
 using PokeData.Seeding.Models;
 
@@ -9,19 +10,29 @@ namespace PokeData.Seeding.Commands;
 internal class SeedRosterCommandHandler : INotificationHandler<SeedRosterCommand>
 {
   private readonly ILogger<SeedRosterCommandHandler> _logger;
+  private readonly IPokemonRosterRepository _pokemonRosterRepository;
   private readonly IPokemonRosterService _pokemonRosterService;
   private readonly IPokemonSpeciesRepository _pokemonSpeciesRepository;
+  private readonly bool _resetRoster;
 
-  public SeedRosterCommandHandler(ILogger<SeedRosterCommandHandler> logger,
-    IPokemonRosterService pokemonRosterService, IPokemonSpeciesRepository pokemonSpeciesRepository)
+  public SeedRosterCommandHandler(IConfiguration configuration, ILogger<SeedRosterCommandHandler> logger,
+    IPokemonRosterRepository pokemonRosterRepository, IPokemonRosterService pokemonRosterService, IPokemonSpeciesRepository pokemonSpeciesRepository)
   {
     _logger = logger;
+    _pokemonRosterRepository = pokemonRosterRepository;
     _pokemonRosterService = pokemonRosterService;
     _pokemonSpeciesRepository = pokemonSpeciesRepository;
+    _resetRoster = configuration.GetValue<bool>("ResetRoster");
   }
 
   public async Task Handle(SeedRosterCommand command, CancellationToken cancellationToken)
   {
+    if (_resetRoster)
+    {
+      int deleted = await _pokemonRosterRepository.DeleteAllAsync(cancellationToken);
+      _logger.LogInformation("Deleted {Count} Pokémon roster items.", deleted);
+    }
+
     string[] paths = Directory.GetFiles(command.Path, "*.csv");
     _logger.LogInformation("Found {Count} roster files to seed.", paths.Length);
 
