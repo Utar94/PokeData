@@ -26,7 +26,7 @@ internal class PokemonTypeRepository : IPokemonTypeRepository
 
     if (type == null)
     {
-      string uniqueNameNormalized = idOrUniqueName.Trim().ToUpper();
+      string uniqueNameNormalized = PokemonDb.Normalize(idOrUniqueName);
 
       type = await _context.PokemonTypes.AsNoTracking()
         .SingleOrDefaultAsync(x => x.UniqueNameNormalized == uniqueNameNormalized, cancellationToken);

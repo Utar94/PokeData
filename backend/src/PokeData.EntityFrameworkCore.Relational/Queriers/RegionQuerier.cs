@@ -33,7 +33,7 @@ internal class RegionQuerier : IRegionQuerier
 
   public async Task<Region?> ReadAsync(string uniqueName, CancellationToken cancellationToken)
   {
-    string uniqueNameNormalized = uniqueName.Trim().ToUpper();
+    string uniqueNameNormalized = PokemonDb.Normalize(uniqueName);
 
     RegionEntity? region = await _regions.AsNoTracking()
       .SingleOrDefaultAsync(x => x.UniqueNameNormalized == uniqueNameNormalized, cancellationToken);
@@ -43,13 +43,13 @@ internal class RegionQuerier : IRegionQuerier
 
   public async Task<SearchResults<Region>> SearchAsync(SearchRegionsPayload payload, CancellationToken cancellationToken)
   {
-    IQueryBuilder builder = _sqlHelper.QueryFrom(Db.Regions.Table)
-      .SelectAll(Db.Regions.Table);
-    _sqlHelper.ApplyTextSearch(builder, payload.Search, Db.Regions.UniqueName, Db.Regions.DisplayName);
+    IQueryBuilder builder = _sqlHelper.QueryFrom(PokemonDb.Regions.Table)
+      .SelectAll(PokemonDb.Regions.Table);
+    _sqlHelper.ApplyTextSearch(builder, payload.Search, PokemonDb.Regions.UniqueName, PokemonDb.Regions.DisplayName);
 
     if (payload.NumberIn.Count > 1)
     {
-      builder.Where(Db.Regions.RegionId, Operators.IsIn(payload.NumberIn));
+      builder.Where(PokemonDb.Regions.RegionId, Operators.IsIn(payload.NumberIn));
     }
 
     IQueryable<RegionEntity> query = _regions.FromQuery(builder)

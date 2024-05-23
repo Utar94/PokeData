@@ -35,7 +35,6 @@ internal class Startup : StartupBase
     services.AddCors(corsSettings);
 
     services.AddApplicationInsightsTelemetry();
-    services.AddMemoryCache();
     IHealthChecksBuilder healthChecks = services.AddHealthChecks();
 
     if (_enableOpenApi)
@@ -43,7 +42,6 @@ internal class Startup : StartupBase
       services.AddOpenApi();
     }
 
-    services.AddMemoryCache();
     services.AddPokeDataWithPokeApiClient();
 
     DatabaseProvider databaseProvider = _configuration.GetValue<DatabaseProvider?>("DatabaseProvider")

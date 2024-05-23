@@ -1,17 +1,17 @@
 ﻿using MediatR;
-using PokeData.Application.Species.Commands;
-using PokeData.Infrastructure.Commands;
-using System.Diagnostics;
+using PokeData.Seeding.Commands;
 
-namespace PokeData.ETL;
+namespace PokeData.Seeding;
 
-public class Worker : BackgroundService
+internal class Worker : BackgroundService
 {
+  private readonly Encoding _encoding;
   private readonly ILogger<Worker> _logger;
   private readonly IServiceProvider _serviceProvider;
 
-  public Worker(ILogger<Worker> logger, IServiceProvider serviceProvider)
+  public Worker(IConfiguration configuration, ILogger<Worker> logger, IServiceProvider serviceProvider)
   {
+    _encoding = Encoding.GetEncoding(configuration.GetValue<string>("Encoding") ?? string.Empty);
     _logger = logger;
     _serviceProvider = serviceProvider;
   }
@@ -23,13 +23,10 @@ public class Worker : BackgroundService
     try
     {
       using IServiceScope scope = _serviceProvider.CreateScope();
-
       IPublisher publisher = scope.ServiceProvider.GetRequiredService<IPublisher>();
-      await publisher.Publish(new InitializeDatabaseCommand(), cancellationToken);
-      await publisher.Publish(new InitializeCachingCommand(), cancellationToken);
 
-      IEnumerable<string> ids = Enumerable.Range(1, 1025).Select(id => id.ToString());
-      await publisher.Publish(new ImportSpeciesCommand(ids), cancellationToken);
+      await publisher.Publish(new SeedRegionsCommand("Data/Regions.csv", _encoding), cancellationToken);
+      await publisher.Publish(new SeedRosterCommand("Data/Roster", _encoding), cancellationToken);
     }
     catch (Exception exception)
     {

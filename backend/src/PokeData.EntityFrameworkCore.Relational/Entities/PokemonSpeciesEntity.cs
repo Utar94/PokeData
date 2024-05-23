@@ -21,7 +21,7 @@ internal class PokemonSpeciesEntity : AggregateEntity
   public string UniqueName { get; private set; } = string.Empty;
   public string UniqueNameNormalized
   {
-    get => UniqueName.ToUpper();
+    get => PokemonDb.Normalize(UniqueName);
     private set { }
   }
   public string? DisplayName { get; private set; }
