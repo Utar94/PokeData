@@ -1,13 +1,13 @@
-version: '3.8'
 services:
   pokedata_mssql:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: PokeData_mssql
+    restart: unless-stopped
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: m7tPnE6dB5TQxYCW
     ports:
       - 27945:1433
-    environment:
-      ACCEPT_EULA: 'Y'
-      MSSQL_SA_PASSWORD: m7tPnE6dB5TQxYCW
 
   pokedata_api:
     build:
@@ -32,5 +32,6 @@ services:
     container_name: PokeData_app
     depends_on:
       - pokedata_api
+    restart: unless-stopped
     ports:
       - 43044:80
